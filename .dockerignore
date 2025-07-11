@@ -1,0 +1,36 @@
+# Ignora dependências locais (devem ser instaladas no container)
+node_modules
+**/node_modules
+
+# Arquivos de log
+*.log
+npm-debug.log*
+
+# Dados gerados por build
+dist
+build
+**/dist
+**/build
+
+# Dados de banco local
+mysql-data
+
+# Diretórios de cache
+.cache
+**/.cache
+.next
+coverage
+
+# Configurações e arquivos de IDE
+.vscode
+.idea
+*.sw?
+
+# Arquivos de controle de versão
+.git
+.gitignore
+.gitattributes
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db

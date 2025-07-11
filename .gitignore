@@ -1,0 +1,60 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+.angular/
+.next/
+.out/
+
+# Temp and log files and directories
+*.log
+*.tmp
+*.temp
+*.old
+temp-back/
+temp-front/
+
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE and editor settings
+.vscode/
+.idea/
+*.suo
+*.sln
+*.njsproj
+
+# Persistent volumes and docker data
+**/mysql-data/
+**/docker-data/
+
+# Docker overrides
+docker-compose.override.yml
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Test outputs
+coverage/
+.nyc_output/
+
+# Angular cache
+frontend-angular/.angular/cache/
+.angular/config.json
+
+# Editor swap files and Yarn PnP
+*.swp
+*.lock-wscript
+.pnp/
+.pnp.js
+
+# VS Code Dev Containers
+.devcontainer/

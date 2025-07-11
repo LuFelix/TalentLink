@@ -1,0 +1,23 @@
+# Build da imagem base com Node.js
+FROM node:18
+
+# Diretório de trabalho dentro do container
+WORKDIR /usr/src/app
+
+# Copiar apenas os arquivos essenciais primeiro
+COPY package*.json ./
+
+# Instalar as dependências do projeto
+RUN npm install
+
+# Copiar o restante do projeto
+COPY . .
+
+# Instalar o Angular CLI globalmente
+#RUN npm install -g @angular/cli
+
+# Expor a porta padrão do Angular
+EXPOSE 4200
+
+# Comando de inicialização (será substituído pelo docker-compose, mas é bom para contexto)
+# CMD ["npm", "start"]

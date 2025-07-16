@@ -1,30 +1,31 @@
 # version: '3.8' Não é mais necessário com versões modernas do Docker Compose (v2+).
 
+name: TalentLink
 services:
   backend:
     build:
       context: ./backend-nest # Caminho para a pasta com o Dockerfile do backend
-      dockerfile: Dockerfile
+      dockerfile: ./Dockerfile
     # network_mode: host -->  está configurado em dev-net  # Usa a rede do host (somente no Linux/WSL)
     container_name: backend-nest
     ports:
       - '3000:3000'            # Mapeia a porta 3000 do container para a porta 3000 do host
     volumes:
       - ./backend-nest:/usr/src/app # Mapeia a pasta do backend para dentro do container
-      - /usr/src/app/node_modules # Evita problemas com dependências do Node.js
+      - backend_node_modules:/usr/src/app/node_modules # Evita problemas com dependências do Node.js
     networks:
       - dev-net
     depends_on:
       - db  # Garante que o banco de dados esteja pronto antes de iniciar o backend
     #command: npm run start:dev # Comando para iniciar o backend em modo de desenvolvimento
-    command: sh -c "npm install && npm run start:dev" # Instala as dependências e inicia o backend em modo de desenvolvimento
+    #command: sh -c "npm install && npm run start:dev" # Instala as dependências e inicia o backend em modo de desenvolvimento
     environment:
       - NODE_ENV=development   # Define o ambiente como desenvolvimento
-      - DB_HOST=db             # Nome do serviço do banco de dados
-      - DB_PORT=3306           # Porta do MySQL
-      - DB_USER=nest           # Usuário do banco de dados
-      - DB_PASSWORD=nest123    # Senha do banco de dados
-      - DB_NAME=nestapp        # Nome do banco de dados
+      #- DB_HOST=db             # Nome do serviço do banco de dados
+      #- DB_PORT=3306           # Porta do MySQL
+      #- DB_USER=nest           # Usuário do banco de dados
+      #- DB_PASSWORD=nest123    # Senha do banco de dados
+      #- DB_NAME=nestapp        # Nome do banco de dados
       #- TYPEORM_CONNECTION=mysql # Tipo de conexão do TypeORM
       #- TYPEORM_SYNCHRONIZE=true # Sincroniza o banco de dados automaticamente (cuidado em produção)
       #- TYPEORM_LOGGING=true   # Habilita o logging do
@@ -36,27 +37,30 @@ services:
       #- TYPEORM_MIGRATIONS_TABLE_NAME=typeorm_migrations # Nome da tabela de migrações
       #- TYPEORM_MIGRATIONS_TRANSACTION_MODE=each # Modo de transação para migrações
       #- TYPEORM_MIGRATIONS_RUN_ON_START=true # Executa migrações ao iniciar o serviço
-    
+    working_dir: /usr/src/app # diretório padrão de trabalho dentro do container
+    #user: node # usuário para evitar problemas de permissão
 
   frontend:
     build:
       context: ./frontend-angular   # Caminho para a pasta com o Dockerfile do frontend
-      dockerfile: Dockerfile        # Dockerfile do frontend
+      dockerfile: ./Dockerfile        # Dockerfile do frontend
     container_name: frontend-angular
     ports:
       - '4200:4200'                 # Mapeia a porta 4200 do container para a porta 4200 do host
     volumes:
       - ./frontend-angular:/usr/src/app
-      - /usr/src/app/node_modules
+      - frontend_node_modules:/usr/src/app/node_modules
     networks:
       - dev-net
-    command: npm start  # Comando para iniciar o frontend em modo de desenvolvimento 
+    #command: npm start  # Comando para iniciar o frontend em modo de desenvolvimento 
     # command: sh -c "npm install && npm start" # Instala as dependências e inicia o frontend em modo de desenvolvimento 
     environment:
-      - CHOKIDAR_USEPOLLING=true   # Necessário para o Angular em ambientes de contêiner   
+      - NODE_ENV=development
+    #- CHOKIDAR_USEPOLLING=true   # Necessário para o Angular em ambientes de contêiner   
     # CHOKIDAR_USEPOLLING=true é usado para garantir que o Angular detecte mudanças em arquivos dentro do contêiner 
     # e recarregue automaticamente, especialmente em sistemas de arquivos que não suportam notificações de mudança.
-    
+    working_dir: /usr/src/app # diretório padrão de trabalho dentro do container
+    #user: node # usuário para evitar problemas de permissão
 
   db:
     image: mysql:8.0
@@ -77,3 +81,6 @@ networks:
   dev-net:
     driver: bridge # Usa o driver de rede bridge padrão do Docker
 
+volumes:
+  frontend_node_modules:
+  backend_node_modules:

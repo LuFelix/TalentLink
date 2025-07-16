@@ -1,0 +1,25 @@
+<mat-toolbar color="primary" class="header-toolbar">
+  <!-- <div class="logo">
+    <img src="assets/logo-ts.png" alt="Talent Link" />
+    <span class="logo-text">Talent Link</span>
+  </div> -->
+
+  <a href="#" class="logo">
+    <img src="assets/logo-ts.png" alt="Talent Link Logo" />
+    <span class="logo-text">Talent Link</span>
+  </a>
+
+  <nav class="main-nav">
+    <a mat-button href="#about-us">Sobre Nós</a>
+    <a mat-button href="#open-vacancies">Vagas Abertas</a>
+    <a mat-button href="#contact">Contato</a>
+  </nav>
+
+  <button mat-icon-button class="menu-button" (click)="toggleSidenav.emit()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <div class="header-actions">
+    <button mat-flat-button color="accent">Entrar</button>
+  </div>
+</mat-toolbar>

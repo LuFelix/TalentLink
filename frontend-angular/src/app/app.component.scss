@@ -1,0 +1,17 @@
+.sidenav-container {
+  height: 100vh; // Garante que o contêiner do sidenav ocupe a altura total da viewport
+  display: flex; // Flexbox para o contêiner
+  flex-direction: column; // Conteúdo empilhado
+
+  mat-sidenav-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1; // Permite que o conteúdo principal ocupe o espaço restante
+  }
+}
+
+mat-sidenav {
+  width: 250px; // Largura do menu lateral
+  padding: 20px; // Espaçamento interno
+  box-sizing: border-box; // Garante que o padding não adicione largura extra
+}

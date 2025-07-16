@@ -19,6 +19,9 @@ COPY package*.json ./
 #Definindo as permissões corretas
 RUN chown -R node:node /usr/src/app
 
+# Instalar Angular CLI globalmente como root, antes de mudar de usuário
+RUN npm install -g @angular/cli
+
 #Trocar para usuário node
 USER node
 

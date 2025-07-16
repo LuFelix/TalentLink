@@ -1,0 +1,204 @@
+@use "@angular/material" as mat;
+//@include mat.all-component-themes(
+//  $your-app-theme
+//); // Isso será para o tema global, por enquanto apenas como placeholder
+// .header-toolbar {
+//   height: 64px; // Altura padrão do toolbar do Material Design
+//   padding: 0 16px;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+
+//   .logo {
+//     display: flex;
+//     align-items: center;
+
+//     img {
+//       height: 40px;
+//       margin-right: 8px;
+//     }
+
+//     .logo-text {
+//       color: white; // Cor do texto do logo
+//       font-size: 1.3em;
+//       font-weight: bold;
+//       white-space: nowrap; // Evita quebra de linha
+//     }
+//   }
+
+//   .main-nav {
+//     display: none; // ESCONDE OS LINKS GRANDES POR PADRÃO (MOBILE-FIRST)
+//     margin-left: auto; // Empurra os links para a direita
+//     a {
+//       color: white;
+//       text-decoration: none;
+//       margin: 0 10px;
+//       font-size: 1em;
+//       transition: color 0.3s ease;
+
+//       &:hover {
+//         color: rgba(255, 255, 255, 0.7);
+//       }
+//     }
+//   }
+
+//   //   .menu-button {
+//   //     display: block; // EXIBE O BOTÃO DE HAMBÚRGUER POR PADRÃO (MOBILE-FIRST)
+//   //     color: white; // Cor do ícone de hambúrguer
+//   //     // Este botão estará à esquerda do header-actions em mobile
+//   //     margin-left: auto; // Empurra o botão para a direita, ao lado das actions
+//   //   }
+
+//   //   .header-actions {
+//   //     // Para mobile, o botão "Entrar" já estará visível
+//   //     button {
+//   //       margin-left: 10px; // Espaçamento entre o botão e o menu-button
+//   //     }
+//   //   }
+//   // }
+//   // .mat-toolbar {
+//   //   padding: 0 16px; // Padding padrão para mobile
+
+//   //   .header-content {
+//   //     display: flex;
+//   //     justify-content: space-between;
+//   //     align-items: center;
+//   //     width: 100%; // Ocupa toda a largura
+//   //     height: 100%; // Ocupa toda a altura do toolbar
+//   //   }
+
+//   //   .logo {
+//   //     text-decoration: none;
+//   //     color: white; // Cor do texto do logo
+//   //     font-weight: bold;
+//   //     font-size: 1.2em; // Tamanho para mobile
+//   //   }
+
+//   //   .navigation {
+//   //     display: none; // Menu oculto por padrão no mobile
+//   //   }
+
+//   // Estilos para telas maiores (ex: tablets e desktops)
+//   @media (min-width: 768px) {
+//     // Ponto de quebra para tablets/desktops
+//     .header-content {
+//       max-width: 1200px; // Largura máxima do conteúdo em telas grandes
+//       margin: 0 auto; // Centraliza o conteúdo
+//     }
+
+//     .logo {
+//       font-size: 1.5em; // Tamanho maior para desktop
+//     }
+
+//     .navigation {
+//       display: block; // Menu visível em telas maiores
+//       flex-grow: 1; // Ocupa espaço disponível
+//       text-align: center; // Centraliza os itens do menu
+
+//       ul {
+//         list-style: none;
+//         padding: 0;
+//         margin: 0;
+//         display: flex;
+//         justify-content: center; // Centraliza os itens do menu
+//         gap: 20px; // Espaçamento entre os itens
+//       }
+
+//       li a {
+//         color: white;
+//         text-decoration: none;
+//         padding: 8px 12px;
+//         transition: background-color 0.3s ease;
+
+//         &:hover {
+//           background-color: rgba(255, 255, 255, 0.4); // Efeito hover
+//           border-radius: 4px;
+//         }
+//       }
+//     }
+//   }
+// }
+
+.header-toolbar {
+  height: 64px; // Altura padrão do toolbar do Material Design
+  padding: 0 16px; // Padding padrão
+  display: flex;
+  align-items: center; // Centraliza itens verticalmente dentro do toolbar
+  justify-content: space-between;
+
+  // O logo e o texto
+  .logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0; // Impede que o logo encolha demais
+
+    img {
+      height: 40px;
+      margin-right: 8px;
+      display: none;
+    }
+
+    .logo-text {
+      color: white; // Cor do texto do logo
+      font-size: 1.3em;
+      font-weight: bold;
+      white-space: nowrap; // Evita quebra de linha
+    }
+  }
+
+  // Links de Navegação (Escondidos por padrão em mobile)
+  .main-nav {
+    display: none; // Esconde a navegação em mobile
+    margin-left: 20px; // Espaçamento à esquerda do logo (no desktop)
+    flex-grow: 1; // Permite que a navegação ocupe o máximo de espaço possível
+
+    a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 1em;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: rgba(250, 250, 250, 0.25); // Efeito hover mais sutil
+      }
+    }
+  }
+
+  // Botão de menu (Hambúrguer) - Visível em mobile
+  .menu-button {
+    display: block; // Exibe o botão de hambúrguer em mobile
+    color: white; // Cor do ícone
+    margin-left: auto; // Empurra o botão para a direita, ao lado das ações
+  }
+
+  // Ações do cabeçalho (Botão Entrar)
+  .header-actions {
+    display: flex; // Para garantir que o botão "Entrar" esteja em linha
+    align-items: center;
+    // Em mobile, o botão de entrar pode estar ao lado do hambúrguer
+    // Ou podemos esconder o botão de entrar em mobile e tê-lo no sidenav se preferir.
+    // Por enquanto, vamos mantê-lo visível para teste.
+  }
+}
+
+// Estilos para Telas Maiores (Desktop)
+@media (min-width: 768px) {
+  .header-toolbar {
+    padding: 0 40px; // Aumenta o padding nas laterais
+
+    .main-nav {
+      display: flex; // Exibe os links de navegação em desktop
+      // Justify-content: space-around; // Ou space-between, ou end
+      // O flex-grow: 1 já deve empurrar para a esquerda e as ações para a direita
+    }
+
+    .menu-button {
+      display: none; // Esconde o botão de hambúrguer em desktop
+    }
+
+    .header-actions {
+      // Nenhuma alteração significativa aqui, pois o botão já está visível
+    }
+  }
+}

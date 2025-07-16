@@ -1,0 +1,151 @@
+.footer-toolbar {
+  height: auto; // Permite que a altura se ajuste ao conteúdo
+  min-height: 80px;
+  padding: 20px 16px; // Padding para mobile
+  display: flex; // Garante que o toolbar use flexbox para seu conteúdo
+  flex-direction: column; // Conteúdo empilhado em mobile
+  align-items: center; // Centraliza itens horizontalmente
+  box-sizing: border-box; // Inclui padding na largura/altura total
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column; // Seções empilhadas em mobile
+  gap: 20px; // Espaçamento entre as seções
+  width: 100%; // Ocupa toda a largura disponível
+  text-align: center; // Centraliza o texto em mobile
+  flex-wrap: wrap;
+  justify-content: center; // Centraliza as seções
+}
+
+.footer-section {
+  width: 100%; // Cada seção ocupa 100% da largura em mobile
+  max-width: 300px; // Limita a largura máxima da seção
+  margin: 0 auto; // Centraliza a seção
+
+  h3 {
+    color: white; // Cor dos títulos das seções
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    max-width: 90%; // Limita a largura da seção em mobile para evitar extravasar
+    margin: 0 auto; // Centraliza a seção
+  }
+
+  .copyright {
+    text-align: center; // Garante que o copyright esteja centralizado em mobile
+    width: 100%; // Ocupa a largura total disponível
+    padding-top: 10px; // Um pouco de espaço acima
+    margin-top: auto; // Empurra para o final se for um item flex
+    box-sizing: border-box; // Importante para padding não causar estouro
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li a {
+    color: rgba(255, 255, 255, 0.6); // Cor dos links (mais suave)
+    text-decoration: none;
+    padding: 5px 0;
+    display: block; // Faz o link ocupar a largura total para clique fácil
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: white; // Efeito hover
+    }
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.7); // Cor do texto dos parágrafos
+    margin-bottom: 5px;
+  }
+}
+.copyright-section {
+  width: 100%;
+  text-align: center;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 0; // No extra top margin here, already accounted for social-media margin-bottom
+  box-sizing: border-box;
+  p {
+    color: white; // Reativando cor para melhor contraste
+    margin: 0;
+  }
+}
+.social-media {
+  margin-top: 20px;
+  margin-bottom: 15px; // Space to content below
+  display: flex;
+  text-align: center;
+  justify-content: center; // Centraliza os ícones em mobile
+  width: 100%; // Garante que os ícones ocupem a largura total
+  box-sizing: border-box;
+  gap: 15px;
+
+  a {
+    display: flex; // Para alinhar imagem e texto alt
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; // Remove sublinhado
+    color: white;
+    font-size: 0.8em; // Tamanho menor para o texto alt
+    text-align: center;
+  }
+}
+// Estilos para telas maiores (ex: tablets e desktops)
+@media (min-width: 768px) {
+  .footer-toolbar {
+    flex-direction: column;
+    padding: 20px 0; // Ajusta padding para centralizar conteúdo
+  }
+
+  .footer-content {
+    flex-direction: row; // Seções lado a lado em desktop
+    justify-content: space-around; // Distribui espaço entre as seções
+    max-width: 1200px; // Largura máxima do conteúdo
+    margin: 0 auto; // Centraliza o conteúdo
+    text-align: left; // Alinha texto à esquerda em desktop
+    align-items: flex-start; // Alinha as seções no topo
+    flex-wrap: nowrap; // Desabilita quebra de linha em desktop
+    width: 100%; // Garante largura total
+  }
+
+  .footer-section {
+    flex: 1; // Permite que as seções ocupem espaço igual
+    padding: 0 15px; // Padding entre as seções
+    max-width: 300px; // Limita a largura de cada seção
+  }
+  .social-media {
+    margin-top: 30px; // More space in desktop
+    margin-bottom: 20px;
+    justify-content: center; // Alinha ícones à esquerda em desktop
+    max-width: 1200px; // Match max-width of footer-content
+    text-align: center;
+    margin-left: auto; // Centralize if max-width is applied
+    margin-right: auto; // Centralize if max-width is applied
+    width: 100%;
+    max-width: 1200px;
+
+    a {
+      display: flex; // Para alinhar imagem e texto alt
+      align-items: center;
+      justify-content: center;
+      text-decoration: none; // Remove sublinhado
+      color: white;
+      font-size: 0.8em; // Tamanho menor para o texto alt
+      text-align: center;
+    }
+  }
+
+  .copyright-section {
+    padding-top: 10px;
+    width: 100%;
+    text-align: center; // Alinha direitos autorais ao direita em desktop
+    //flex: none; // Não permite que o copyright ocupe espaço igual
+    border-top: 3px solid rgba(255, 255, 255, 0.1);
+    padding-top: 0; // Remove o padding extra de cima
+    margin-top: 20px;
+  }
+}

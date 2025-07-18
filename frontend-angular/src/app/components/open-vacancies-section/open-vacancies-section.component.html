@@ -1,0 +1,10 @@
+<section class="open-vacancies-section" id="open-vacancies">
+  <h2>Vagas Abertas</h2>
+  <p>Confira nossas oportunidades e faça parte da nossa equipe inovadora.</p>
+
+  <div class="job-listings">
+    <app-job-card *ngFor="let job of jobs" [job]="job"></app-job-card>
+  </div>
+
+  <button mat-raised-button color="primary">Ver Todas as Vagas</button>
+</section>

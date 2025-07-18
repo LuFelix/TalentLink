@@ -1,0 +1,66 @@
+// Estilos para o componente ANFITRIÃO (<app-job-card>)
+// Este é o elemento que é um ITEM FLEX do .job-listings
+:host {
+  display: block; // Ou 'inline-block'. 'block' é comum para ocupar sua própria linha.
+  // 'display: flex;' também funciona se você quiser que o host seja um flex container.
+  // Para este caso de item flex, 'display: block;' é uma boa escolha inicial.
+
+  // --- PROPRIEDADES FLEX PARA O ITEM ---
+  flex: 1 1 280px; // Permite que o card cresça, encolha e tenha uma base de 300px
+  max-width: 350px; // Largura máxima para desktop
+
+  // --- MEDIA QUERIES PARA O HOST (ITEM FLEX) ---
+  @media (max-width: 768px) {
+    flex: 1 1 250px; // Base menor para tablets
+  }
+  @media (max-width: 480px) {
+    flex: 1 1 100%; // Em telas muito pequenas, o card ocupa 100% da largura disponível
+    max-width: none; // Remove o limite para que ele possa ocupar 100%
+  }
+}
+
+.job-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center; // Centraliza o conteúdo do card
+  text-align: center;
+  //height: 100%;
+}
+
+h3 {
+  font-size: 1.5em;
+  color: #007bff; // Cor para o título da vaga
+  margin-bottom: 10px;
+  @media (max-width: 768px) {
+    font-size: 1.3em;
+  }
+  @media (max-width: 480px) {
+    font-size: 1.2em;
+  }
+}
+
+p {
+  font-size: 0.95em;
+  color: #777;
+  line-height: 1.6;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    font-size: 0.9em;
+  }
+  @media (max-width: 480px) {
+    font-size: 0.85em;
+  }
+}
+
+button {
+  margin-top: auto; // Empurra o botão para o final do card
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+  border: 2px solid #ddd;
+  border-radius: 8px;
+}

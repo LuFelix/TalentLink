@@ -1,0 +1,40 @@
+// Seção "Entre em Contato"
+.contact-section {
+  background-color: #f0f8ff; // Outro fundo claro para contraste
+  padding-bottom: 80px;
+
+  .contact-form {
+    display: flex;
+    flex-direction: column; // Organiza os campos em coluna
+    align-items: center; // Centraliza o formulário no container
+    gap: 20px; // Espaçamento entre os campos
+    max-width: 600px; // Limita a largura do formulário
+    margin: 40px auto 0 auto; // Centraliza o formulário
+
+    mat-form-field {
+      width: 100%; // Faz com que o campo ocupe toda a largura disponível no formulário
+      max-width: 500px; // Largura máxima do campo
+    }
+
+    button[type="submit"] {
+      font-size: 1.1em;
+      padding: 10px 30px;
+      border-radius: 25px;
+      margin-top: 10px; // Espaço acima do botão
+    }
+  }
+  @media (min-width: 768px) {
+    .contact-section {
+      .contact-form {
+        // Já centralizado por margin: 0 auto.
+      }
+    }
+  }
+  @media (max-width: 480px) {
+    .contact-section {
+      .contact-form {
+        gap: 15px; // Reduz espaçamento entre campos
+      }
+    }
+  }
+}

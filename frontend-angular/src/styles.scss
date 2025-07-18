@@ -8,3 +8,62 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+/* Estilos Globais para a Tag <section> */
+// Estes estilos são para a 'section' em si
+section {
+  padding: 60px 20px; // Padrão para mobile e pequenos tablets
+  text-align: center; // Centraliza texto e elementos de bloco
+  max-width: 1200px; // Largura máxima para o conteúdo das seções
+  margin: 0 auto; // Centraliza a seção na página
+  box-sizing: border-box; // Garante que padding não adicione largura extra
+
+  /* --- Media Queries para a SEÇÃO em si --- */
+  @media (min-width: 768px) {
+    padding: 80px 40px; // Aumenta o padding em telas maiores
+  }
+  @media (max-width: 480px) {
+    padding: 40px 15px; // Reduz padding em telas muito pequenas
+  }
+}
+
+// Estilos para H2 e P DENTRO DE SEÇÕES, com especificidade suficiente para sobrescrever o Material.
+// Seletores mais específicos e devem ser a fonte única para font-size.
+.app-main-content section {
+  h2 {
+    font-size: 2.5em; /* Tamanho padrão para h2 em mobile e telas maiores (desktop) */
+    color: #333; // Cor para o título da seção (se o Material não estiver sobrescrevendo)
+    margin-bottom: 40px; // Espaçamento abaixo do título (se o Material não estiver sobrescrevendo)
+  }
+
+  p {
+    font-size: 1.1em; /* Tamanho padrão para p em mobile e telas maiores (desktop) */
+    line-height: 1.6;
+    color: #555;
+    max-width: 800px;
+    margin: 0 auto 30px auto;
+  }
+
+  /* --- Media Queries para H2 e P DENTRO de .app-main-content section --- */
+
+  // Para tablets e desktops (ajustes menores)
+  @media (min-width: 768px) {
+    h2 {
+      font-size: 3em; // Títulos maiores em desktop
+    }
+    p {
+      font-size: 1.2em;
+    }
+  }
+
+  // Para smartphones pequenos (ajustes mais compactos)
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 2em; // Títulos menores para smartphones
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 0.95em;
+    }
+  }
+}

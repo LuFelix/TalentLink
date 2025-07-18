@@ -1,0 +1,73 @@
+.hero-section {
+  position: relative; // Para posicionar o conteúdo em relação a esta seção
+  height: 500px; // Altura da seção
+  background-image: url("/hero-background-1.webp"); // Certifique-se de ter esta imagem
+  background-size: cover; // Cobrirá toda a área, cortando se necessário
+  background-position: center; // Centraliza a imagem
+  display: flex;
+  align-items: center; // Centraliza o conteúdo verticalmente
+  justify-content: center; // Centraliza o conteúdo horizontalmente
+  color: white; // Cor do texto para contraste com o fundo escuro
+  text-align: center;
+  padding: 20px; // Espaçamento interno
+  box-sizing: border-box;
+
+  // Camada escura sobre a imagem para melhorar a legibilidade do texto
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); // Escurece a imagem em 50%
+    z-index: 1; // Garante que a camada esteja abaixo do conteúdo
+  }
+
+  .hero-content {
+    position: relative; // Acima da camada escura
+    z-index: 2;
+    max-width: 800px; // Largura máxima do texto
+
+    h1 {
+      font-size: 3em; // Tamanho do título principal
+      margin-bottom: 15px;
+      line-height: 1.2; // Espaçamento entre linhas
+    }
+
+    p {
+      font-size: 1.2em; // Tamanho do parágrafo
+      margin-bottom: 30px;
+      max-width: 600px; // Limita largura do parágrafo
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    // Estilos para o botão mat-raised-button color="accent"
+    button {
+      font-size: 1.1em;
+      padding: 10px 30px; // Aumenta o tamanho do botão
+      border-radius: 25px; // Botão arredondado
+    }
+  }
+}
+
+// Media Query para telas menores
+@media (max-width: 767px) {
+  .hero-section {
+    height: 400px; // Diminui a altura em mobile
+
+    .hero-content {
+      h1 {
+        font-size: 2em; // Reduz o tamanho do título
+      }
+      p {
+        font-size: 1em; // Reduz o tamanho do parágrafo
+      }
+      button {
+        font-size: 0.9em;
+        padding: 8px 20px;
+      }
+    }
+  }
+}

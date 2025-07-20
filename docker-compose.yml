@@ -1,24 +1,25 @@
 # version: '3.8' Não é mais necessário com versões modernas do Docker Compose (v2+).
 
 name: TalentLink
+
 services:
   backend:
     build:
       context: ./backend-nest # Caminho para a pasta com o Dockerfile do backend
       dockerfile: ./Dockerfile
-    # network_mode: host -->  está configurado em dev-net  # Usa a rede do host (somente no Linux/WSL)
+      args:
+        HOST_UID: ${HOST_UID:-1000}
+        HOST_GID: ${HOST_GID:-1000}
     container_name: backend-nest
     ports:
       - '3000:3000'            # Mapeia a porta 3000 do container para a porta 3000 do host
     volumes:
       - ./backend-nest:/usr/src/app # Mapeia a pasta do backend para dentro do container
-      - backend_node_modules:/usr/src/app/node_modules # Evita problemas com dependências do Node.js
+      #- backend_node_modules:/usr/src/app/node_modules # Evita problemas com dependências do Node.js
     networks:
       - dev-net
     depends_on:
-      - db  # Garante que o banco de dados esteja pronto antes de iniciar o backend
-    #command: npm run start:dev # Comando para iniciar o backend em modo de desenvolvimento
-    #command: sh -c "npm install && npm run start:dev" # Instala as dependências e inicia o backend em modo de desenvolvimento
+      - postgres_db  # Garante que o banco de dados esteja pronto antes de iniciar o backend
     environment:
       - NODE_ENV=development   # Define o ambiente como desenvolvimento
       #- DB_HOST=db             # Nome do serviço do banco de dados
@@ -38,7 +39,10 @@ services:
       #- TYPEORM_MIGRATIONS_TRANSACTION_MODE=each # Modo de transação para migrações
       #- TYPEORM_MIGRATIONS_RUN_ON_START=true # Executa migrações ao iniciar o serviço
     working_dir: /usr/src/app # diretório padrão de trabalho dentro do container
+    command: sh -c "npm install && npm run start:dev" # Instala as dependências e inicia o backend em modo de desenvolvimento
     #user: node # usuário para evitar problemas de permissão
+    #command: npm run start:dev # Comando para iniciar o backend em modo de desenvolvimento
+
 
   frontend:
     build:
@@ -62,7 +66,7 @@ services:
     working_dir: /usr/src/app # diretório padrão de trabalho dentro do container
     #user: node # usuário para evitar problemas de permissão
 
-  db:
+  mysql_db:
     image: mysql:8.0
     container_name: mysql-db
     environment:
@@ -76,7 +80,19 @@ services:
       - ./mysql-data:/var/lib/mysql   # Mapeia a pasta local para persistência de dados
     networks:
       - dev-net
-
+  postgres_db:
+      image: postgres:15 # Versão estável do PostgreSQL
+      container_name: postgres-db # Nome do container
+      environment:
+        POSTGRES_DB: nestjs_db # Nome do banco de dados que o NestJS vai usar
+        POSTGRES_USER: nestjs_user # Usuário para o NestJS se conectar
+        POSTGRES_PASSWORD: nestjs_password # Senha para o NestJS se conectar
+      ports:
+        - "5432:5432" # Porta padrão do PostgreSQL. Certifique-se de que não está em uso.
+      volumes:
+        - postgres_data:/var/lib/postgresql/data # Volume para persistência de dados do PostgreSQL
+      networks:
+        - dev-net
 networks:
   dev-net:
     driver: bridge # Usa o driver de rede bridge padrão do Docker
@@ -84,3 +100,4 @@ networks:
 volumes:
   frontend_node_modules:
   backend_node_modules:
+  postgres_data:

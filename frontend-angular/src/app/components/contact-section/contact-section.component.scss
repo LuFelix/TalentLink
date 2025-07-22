@@ -17,10 +17,12 @@
     }
 
     button[type="submit"] {
+      margin-top: auto;
       font-size: 1.1em;
       padding: 10px 30px;
-      border-radius: 25px;
+      border-radius: 8px;
       margin-top: 10px; // Espaço acima do botão
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
     }
   }
   @media (min-width: 768px) {

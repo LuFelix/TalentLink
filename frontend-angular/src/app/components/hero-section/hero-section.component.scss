@@ -36,18 +36,24 @@
     }
 
     p {
-      font-size: 1.2em; // Tamanho do parágrafo
+      font-size: 1.3em; // Tamanho do parágrafo
       margin-bottom: 30px;
       max-width: 600px; // Limita largura do parágrafo
       margin-left: auto;
       margin-right: auto;
+      color: white; // Cor do texto
+      opacity: 0.9; // Levemente transparente para suavizar o contraste
+      font-weight: 400;
     }
 
     // Estilos para o botão mat-raised-button color="accent"
     button {
       font-size: 1.1em;
       padding: 10px 30px; // Aumenta o tamanho do botão
-      border-radius: 25px; // Botão arredondado
+      border-radius: 8px;
+      box-shadow: 0 6px 20px rgba(0, 7, 150, 0.904); // Sombra para destaque
+      //background-color: #ff4081; // Cor de fundo do botão
+      //color: white; // Cor do texto do botão
     }
   }
 }

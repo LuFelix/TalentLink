@@ -4,6 +4,16 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // --- CONFIGURAÇÃO DO CORS ---
+  // IMPORTANTE: Em produção restringir 'origin' para o domínio do seu frontend.
+  app.enableCors({
+    origin: 'http://localhost:4200', // Permite requisições APENAS do seu frontend Angular
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Permite os métodos HTTP necessários
+    credentials: true, // Se você for usar cookies ou credenciais em requisições
+  });
+  // --- FIM DA CONFIGURAÇÃO DO CORS ---
+  // --- CONFIGURAÇÃO DO SWAGGER
   const config = new DocumentBuilder()
     .setTitle('API de Autenticação de Usuários')
     .setDescription(
@@ -11,11 +21,14 @@ async function bootstrap() {
     )
     .setVersion('1.0')
     .addTag('users')
-    // .addBearerAuth()
+    .addTag('auth')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+  // --- FIM DA CONFIGURAÇÃO DO SWAGGER ---
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

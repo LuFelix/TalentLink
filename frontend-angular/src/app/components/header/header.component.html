@@ -10,7 +10,7 @@
   </a>
 
   <nav class="main-nav">
-    <a mat-button href="#about-us">Sobre Nós</a>
+    <a mat-button href="#about-us">Quem Somos</a>
     <a mat-button href="#open-vacancies">Vagas Abertas</a>
     <a mat-button href="#contact">Contato</a>
   </nav>
@@ -20,6 +20,21 @@
   </button>
 
   <div class="header-actions">
-    <button mat-flat-button color="accent">Entrar</button>
+    <button
+      mat-flat-button
+      color="accent"
+      routerLink="/login"
+      *ngIf="(isAuthenticated$ | async) === false"
+    >
+      Entrar
+    </button>
+    <button
+      mat-flat-button
+      color="warn"
+      (click)="logout()"
+      *ngIf="isAuthenticated$ | async"
+    >
+      Sair
+    </button>
   </div>
 </mat-toolbar>

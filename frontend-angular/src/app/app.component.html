@@ -1,13 +1,13 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav-content>
     <app-header (toggleSidenav)="sidenav.toggle()"></app-header>
-    <app-home></app-home>
+    <router-outlet></router-outlet>
     <app-footer></app-footer>
   </mat-sidenav-content>
 
   <mat-sidenav #sidenav mode="over" position="end">
     <mat-nav-list>
-      <a mat-list-item href="#about-us" (click)="sidenav.close()">Sobre Nós</a>
+      <a mat-list-item href="#about-us" (click)="sidenav.close()">Quem Somos</a>
       <a mat-list-item href="#open-vacancies" (click)="sidenav.close()"
         >Vagas Abertas</a
       >

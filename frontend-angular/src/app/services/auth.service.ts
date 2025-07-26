@@ -7,7 +7,7 @@ import { Router } from '@angular/router'; // Para redirecionar após o login
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/auth'; // URL base da API de autenticação
+  private apiUrl = 'https://talentlink.local/api/auth'; // URL base da API de autenticação
   // BehaviorSubject para emitir o estado de autenticação
   // Inicializa com base na existência do token no localStorage
   private _isAuthenticated = new BehaviorSubject<boolean>(this.hasToken());

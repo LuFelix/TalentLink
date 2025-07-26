@@ -80,19 +80,20 @@ services:
       - ./mysql-data:/var/lib/mysql   # Mapeia a pasta local para persistência de dados
     networks:
       - dev-net
+  
   postgres_db:
-      image: postgres:15 # Versão estável do PostgreSQL
-      container_name: postgres-db # Nome do container
-      environment:
-        POSTGRES_DB: nestjs_db # Nome do banco de dados que o NestJS vai usar
-        POSTGRES_USER: nestjs_user # Usuário para o NestJS se conectar
-        POSTGRES_PASSWORD: nestjs_password # Senha para o NestJS se conectar
-      ports:
-        - "5432:5432" # Porta padrão do PostgreSQL. Certifique-se de que não está em uso.
-      volumes:
-        - postgres_data:/var/lib/postgresql/data # Volume para persistência de dados do PostgreSQL
-      networks:
-        - dev-net
+    image: postgres:15 # Versão estável do PostgreSQL
+    container_name: postgres-db # Nome do container
+    environment:
+      POSTGRES_DB: nestjs_db # Nome do banco de dados que o NestJS vai usar
+      POSTGRES_USER: nestjs_user # Usuário para o NestJS se conectar
+      POSTGRES_PASSWORD: nestjs_password # Senha para o NestJS se conectar
+    ports:
+      - "5432:5432" # Porta padrão do PostgreSQL. Certifique-se de que não está em uso.
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Volume para persistência de dados do PostgreSQL
+    networks:
+      - dev-net
 networks:
   dev-net:
     driver: bridge # Usa o driver de rede bridge padrão do Docker

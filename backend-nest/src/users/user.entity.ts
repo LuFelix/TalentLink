@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Role } from '../auth/enums/role.enum';
 
 @Entity() // Marca a classe como uma entidade do TypeORM
 export class User {
@@ -13,4 +14,12 @@ export class User {
 
   @Column({ default: true }) // Exemplo: coluna para status de ativo/inativo
   isActive: boolean;
+
+  //Usar JSON (mais flexível e compatível com muitos DBs)
+  @Column({
+    type: 'jsonb',
+    array: false,
+    default: () => '\'["user"]\'::jsonb',
+  })
+  roles: Role[];
 }

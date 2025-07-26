@@ -16,6 +16,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: any) {
     // Este método é chamado após o JWT ser validado com sucesso.
     // O 'payload' contém os dados que você assinou no JWT.
-    return { userId: payload.sub, email: payload.email }; // Retorna o objeto de usuário (adiciona ao req.user)
+    return { userId: payload.sub, email: payload.email, roles: payload.roles }; // Retorna o objeto de usuário (adiciona ao req.user)
   }
 }

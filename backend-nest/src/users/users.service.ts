@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt'; // Biblioteca para hash de senhas
-
+import { PaginationResult } from '../interfaces/pagination-result.interface.ts';
 @Injectable()
 export class UsersService {
   constructor(
@@ -26,7 +26,24 @@ export class UsersService {
       password: hashedPassword,
       isActive: true, // Por padrão, o novo usuário é ativo
     });
-
     return this.usersRepository.save(newUser);
+  }
+  async findAll(page: number, limit: number): Promise<PaginationResult<User>> {
+    const skip = (page - 1) * limit;
+
+    const [users, total] = await this.usersRepository.findAndCount({
+      select: ['id', 'email', 'isActive', 'roles'],
+      take: limit,
+      skip: skip,
+      order: { id: 'ASC' },
+    });
+
+    return {
+      data: users,
+      total: total,
+      page: page,
+      limit: limit,
+      totalPages: Math.ceil(total / limit),
+    };
   }
 }

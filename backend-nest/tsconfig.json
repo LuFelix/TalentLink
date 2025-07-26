@@ -16,6 +16,25 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "noFallthroughCasesInSwitch": false,
+    "types": ["node", "jest"],
+    "paths": {
+      // <<< ADICIONE ESTA SEÇÃO
+      "@app/*": ["src/*"],
+      "@auth/*": ["src/auth/*"], // Mapeia @auth para src/auth
+      "@users/*": ["src/users/*"], // Mapeia @users para src/users
+      "@config/*": ["src/config/*"], // Mapeia @config para src/config
+      "@interfaces/*": ["src/interfaces/*"] // Mapeia @interfaces para src/interfaces
+    }
+  },
+  "include": [
+    // <<< ADICIONE ESTA SEÇÃO (ou adicione o item se já existir)
+    "src/**/*.ts",
+    "src/migrations/*.ts" // <<< ESTA É A LINHA CHAVE
+  ],
+  "exclude": [
+    // <<< É uma boa prática adicionar exclude também
+    "node_modules",
+    "dist"
+  ]
 }

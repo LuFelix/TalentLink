@@ -8,7 +8,7 @@ async function bootstrap() {
   // --- CONFIGURAÇÃO DO CORS ---
   // IMPORTANTE: Em produção restringir 'origin' para o domínio do seu frontend.
   app.enableCors({
-    origin: 'http://localhost:4200', // Permite requisições APENAS do seu frontend Angular
+    origin: 'https://talentlink.local', // Permite requisições APENAS do seu frontend Angular
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Permite os métodos HTTP necessários
     credentials: true, // Se você for usar cookies ou credenciais em requisições
   });
@@ -28,6 +28,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
   // --- FIM DA CONFIGURAÇÃO DO SWAGGER ---
+
+  //é uma boa prática ter um prefixo para todas as rotas da API
+  //  (/api/auth, /api/users, etc.).
+  app.setGlobalPrefix('api');
 
   await app.listen(process.env.PORT ?? 3000);
 }

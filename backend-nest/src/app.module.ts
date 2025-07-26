@@ -21,7 +21,7 @@ import { AuthModule } from './auth/auth.module';
       password: process.env.DB_PASSWORD || 'nestjs_password', // Usa DB_PASSWORD ou 'nestjs_password'
       database: process.env.DB_NAME || 'nestjs_db', // Usa DB_NAME ou 'nestjs_db'
       entities: [User], // Array onde as entidades do banco de dados serão listadas
-      synchronize: true, // ATENÇÃO: Usar apenas em ambiente de desenvolvimento!
+      synchronize: false, // ATENÇÃO: Usar apenas em ambiente de desenvolvimento!
       // Sincroniza o schema do DB com suas entidades.
       // Em produção, use migrações!
       logging: true, // Opcional: Mostra as queries SQL executadas no console

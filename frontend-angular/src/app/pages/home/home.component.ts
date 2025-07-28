@@ -20,3 +20,13 @@ import { ContactSectionComponent } from '../../components/contact-section/contac
 export class HomeComponent {
   //Lógica da Home.
 }
+
+// import { Component } from '@angular/core';
+
+// @Component({
+//   selector: 'app-home',
+//   standalone: true,
+//   template: `<h1>Bem-vindo ao TalentLink</h1>`, // Template mínimo
+//   styles: [],
+// })
+// export class HomeComponent {}

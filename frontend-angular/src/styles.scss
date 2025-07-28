@@ -1,5 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
-
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
+//@import "@angular/material/prebuilt-themes/deep-purple-amber.css";
+//@import "~@angular/material/prebuilt-themes/deep-purple-amber.css";
+//@import "../node_modules/@angular/material/prebuilt-themes/deep-purple-amber.css";
+//@import "https://cdn.jsdelivr.net/npm/@angular/material@19.2.19/prebuilt-themes/deep-purple-amber.css";
+// --- ESTILOS GLOBAIS GERAIS (podem vir depois da tematização do Material) ---
 html,
 body {
   height: 100%;

@@ -1,5 +1,48 @@
 <div class="profile-container">
-  <h2>Bem-vindo ao seu Perfil!</h2>
-  <p>Você está logado com sucesso. Mais detalhes do perfil virão aqui.</p>
-  <button (click)="logout()">Sair</button>
+  <mat-card class="profile-card">
+    <mat-card-header>
+      <mat-card-title>Meu Perfil</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="profileForm">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" />
+        </mat-form-field>
+
+        <div class="profile-actions">
+          <button
+            mat-raised-button
+            color="primary"
+            *ngIf="!isEditing"
+            (click)="toggleEditMode()"
+          >
+            Editar Perfil
+          </button>
+
+          <ng-container *ngIf="isEditing">
+            <button
+              mat-raised-button
+              color="accent"
+              (click)="onSave()"
+              [disabled]="profileForm.invalid || isLoading"
+            >
+              <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
+              Salvar
+            </button>
+            <button mat-stroked-button color="warn" (click)="onCancel()">
+              Cancelar
+            </button>
+          </ng-container>
+          <button
+            mat-stroked-button
+            color="basic"
+            (click)="navigateToDashboard()"
+          >
+            Voltar para o Dashboard
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

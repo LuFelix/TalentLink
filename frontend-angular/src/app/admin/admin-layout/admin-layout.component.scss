@@ -1,0 +1,54 @@
+//@use "@angular/material" as mat; // Módulo do Angular Material
+//@use "../../../main";
+
+.admin-sidenav-container {
+  height: 100vh; // Ocupa a altura total da viewport
+
+  .admin-sidenav {
+    width: 250px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+
+    mat-toolbar {
+      font-size: 20px;
+      font-weight: 500;
+      color: white; // Cor do texto
+    }
+
+    mat-nav-list {
+      padding-top: 0;
+
+      .mat-list-item {
+        font-size: 16px;
+        height: 50px; // Altura padrão do item
+        &.active-link {
+          background-color: rgba(0, 0, 0, 0.04);
+          // color: mat.get-color-from-palette(
+          //   $mat-primary,
+          //   500
+          // ); // Exemplo de cor primária
+          color: #3f51b5;
+          font-weight: 500;
+        }
+        mat-icon {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  .admin-sidenav-content {
+    .admin-toolbar {
+      height: 64px; // Altura padrão de toolbars grandes
+      .toolbar-spacer {
+        flex: 1 1 auto; // Empurra os itens para os lados
+      }
+      button {
+        color: white; // Botões no toolbar
+      }
+    }
+
+    .admin-content {
+      padding: 20px;
+    }
+  }
+}

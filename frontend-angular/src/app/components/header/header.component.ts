@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common'; // Para ngIf
 import { RouterModule } from '@angular/router'; // Para routerLink
-import { AuthService } from '../../services/auth.service'; // <-- Importe o AuthService
+import { AuthService } from '../../auth/auth.service'; // <-- Importe o AuthService
 import { Observable } from 'rxjs'; // Para usar Observables
 
 @Component({

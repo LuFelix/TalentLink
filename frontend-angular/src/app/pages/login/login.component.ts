@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms'; // Para usar formulários reativos
 import { RouterModule, Router } from '@angular/router'; // Para usar routerLink e router
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +37,7 @@ export class LoginComponent {
         next: (response) => {
           console.log('Login bem-sucedido!', response);
           // *** REDIRECIONAMENTO APÓS LOGIN ***
-          this.router.navigate(['/profile']); // Redireciona para a futura página de perfil
+          this.router.navigate(['/dashboard']); // Redireciona para a futura página de perfil
         },
         error: (error) => {
           console.error('Erro no login:', error);

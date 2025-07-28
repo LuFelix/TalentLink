@@ -1,0 +1,218 @@
+<!-- <!-- 
+<div class="user-list-container">
+  <div class="user-list-container">
+    <mat-card class="user-list-card">
+      <mat-card-header>
+        <mat-card-title>Gerenciamento de Usuários</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="isLoading" class="loading-spinner">
+          <mat-spinner></mat-spinner>
+          <p>Carregando usuários...</p>
+        </div>
+
+        <table
+          mat-table
+          [dataSource]="users"
+          class="mat-elevation-z8"
+          *ngIf="!isLoading"
+        >
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let user">{{ user.id }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="roles">
+            <th mat-header-cell *matHeaderCellDef>Roles</th>
+            <td mat-cell *matCellDef="let user">{{ user.roles.join(", ") }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Ações</th>
+            <td mat-cell *matCellDef="let user">
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="openDeleteDialog(user)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <p *ngIf="!isLoading && users.length === 0" class="no-users-message">
+          Nenhum usuário encontrado.
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div> -->
+
+<!-- <div class="user-list-container">
+  <mat-card class="user-list-card">
+    <mat-card-header>
+      <mat-card-title>Gerenciamento de Usuários</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="isLoading" class="loading-spinner">
+        <mat-spinner></mat-spinner>
+        <p>Carregando usuários...</p>
+      </div>
+
+      <div *ngIf="!isLoading" class="table-view">
+        <div class="responsive-table-container mat-elevation-z8">
+          <table mat-table [dataSource]="users">
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>ID</th>
+              <td mat-cell *matCellDef="let user">{{ user.id }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef>Email</th>
+              <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="roles">
+              <th mat-header-cell *matHeaderCellDef>Roles</th>
+              <td mat-cell *matCellDef="let user">
+                {{ user.roles.join(", ") }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Ações</th>
+              <td mat-cell *matCellDef="let user">
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="openDeleteDialog(user)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading" class="card-view">
+        <mat-card *ngFor="let user of users" class="user-card mat-elevation-z2">
+          <mat-card-content>
+            <div class="card-row">
+              <strong>ID:</strong> <span>{{ user.id }}</span>
+            </div>
+            <div class="card-row">
+              <strong>Email:</strong> <span>{{ user.email }}</span>
+            </div>
+            <div class="card-row">
+              <strong>Roles:</strong> <span>{{ user.roles.join(", ") }}</span>
+            </div>
+            <div class="card-actions">
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="openDeleteDialog(user)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <p *ngIf="!isLoading && users.length === 0" class="no-users-message">
+        Nenhum usuário encontrado.
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div> -->
+
+<div class="user-list-container">
+  <mat-card class="user-list-card">
+    <mat-card-header>
+      <mat-card-title>Gerenciamento de Usuários</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="isLoading" class="loading-spinner">
+        <mat-spinner></mat-spinner>
+        <p>Carregando usuários...</p>
+      </div>
+
+      <div *ngIf="!isLoading" class="table-view-container">
+        <table mat-table [dataSource]="users" class="mat-elevation-z8">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let user">{{ user.id }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="roles">
+            <th mat-header-cell *matHeaderCellDef>Roles</th>
+            <td mat-cell *matCellDef="let user">{{ user.roles.join(", ") }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Ações</th>
+            <td mat-cell *matCellDef="let user">
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="openDeleteDialog(user)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+
+      <div *ngIf="!isLoading" class="card-view-container">
+        <mat-card *ngFor="let user of users" class="user-card mat-elevation-z2">
+          <mat-card-content>
+            <div class="card-row">
+              <strong>ID:</strong> <span>{{ user.id }}</span>
+            </div>
+            <div class="card-row">
+              <strong>Email:</strong> <span>{{ user.email }}</span>
+            </div>
+            <div class="card-row">
+              <strong>Roles:</strong> <span>{{ user.roles.join(", ") }}</span>
+            </div>
+            <div class="card-actions">
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="openDeleteDialog(user)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <p *ngIf="!isLoading && users.length === 0" class="no-users-message">
+        Nenhum usuário encontrado.
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>

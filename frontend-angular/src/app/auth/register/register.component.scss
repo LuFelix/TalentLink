@@ -1,0 +1,57 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5; // Fundo suave
+}
+
+.register-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  mat-card-header {
+    margin-bottom: 20px;
+    .mat-card-title {
+      font-size: 24px;
+      font-weight: 500;
+    }
+  }
+
+  mat-card-content {
+    form {
+      display: flex;
+      flex-direction: column;
+
+      mat-form-field {
+        width: 100%;
+        margin-bottom: 15px;
+      }
+
+      button {
+        height: 48px;
+        font-size: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        mat-spinner {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  mat-card-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    a {
+      text-decoration: none;
+      color: var(--primary-color, #673ab7); // Cor primária do Angular Material
+    }
+  }
+}

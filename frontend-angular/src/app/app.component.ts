@@ -3,7 +3,6 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component'; // Importe o HeaderComponent
 import { FooterComponent } from './components/footer/footer.component'; // Importe o FooterComponent
 import { HomeComponent } from './pages/home/home.component'; // Importe o HomeComponent
-
 // Importe MatSidenavModule
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';

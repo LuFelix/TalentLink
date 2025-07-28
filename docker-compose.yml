@@ -1,5 +1,4 @@
 # version: '3.8' Não é mais necessário com versões modernas do Docker Compose (v2+).
-
 name: TalentLink
 
 services:
@@ -39,7 +38,7 @@ services:
       #- TYPEORM_MIGRATIONS_TRANSACTION_MODE=each # Modo de transação para migrações
       #- TYPEORM_MIGRATIONS_RUN_ON_START=true # Executa migrações ao iniciar o serviço
     working_dir: /usr/src/app # diretório padrão de trabalho dentro do container
-    command: sh -c "npm install && npm run start:dev" # Instala as dependências e inicia o backend em modo de desenvolvimento
+    #command: sh -c "npm install && npm run start:dev" # Instala as dependências e inicia o backend em modo de desenvolvimento
     #user: node # usuário para evitar problemas de permissão
     #command: npm run start:dev # Comando para iniciar o backend em modo de desenvolvimento
 
@@ -54,17 +53,20 @@ services:
     volumes:
       - ./frontend-angular:/usr/src/app
       - frontend_node_modules:/usr/src/app/node_modules
+      - angular-cache:/usr/src/app/.angular/cache
     networks:
       - dev-net
-    #command: npm start  # Comando para iniciar o frontend em modo de desenvolvimento 
-    # command: sh -c "npm install && npm start" # Instala as dependências e inicia o frontend em modo de desenvolvimento 
     environment:
       - NODE_ENV=development
-    #- CHOKIDAR_USEPOLLING=true   # Necessário para o Angular em ambientes de contêiner   
+      - CHOKIDAR_USEPOLLING=true   # Necessário para o Angular em ambientes de contêiner   
     # CHOKIDAR_USEPOLLING=true é usado para garantir que o Angular detecte mudanças em arquivos dentro do contêiner 
-    # e recarregue automaticamente, especialmente em sistemas de arquivos que não suportam notificações de mudança.
+    # 9 e recarregue automaticamente, especialmente em sistemas de arquivos que não suportam notificações de mudança.
+    #command: sh -c "npm install && npx tailwindcss init -p && npm start"
+    #command: bash ./start.sh
+    #command: npm start  # Comando para iniciar o frontend em modo de desenvolvimento 
+    command: sh -c "npm install && npm start" # Instala as dependências e inicia o frontend em modo de desenvolvimento 
+    user: "node" # usuário para evitar problemas de permissão
     working_dir: /usr/src/app # diretório padrão de trabalho dentro do container
-    #user: node # usuário para evitar problemas de permissão
 
   mysql_db:
     image: mysql:8.0
@@ -99,6 +101,7 @@ networks:
     driver: bridge # Usa o driver de rede bridge padrão do Docker
 
 volumes:
-  frontend_node_modules:
-  backend_node_modules:
-  postgres_data:
+  frontend_node_modules: {}
+  backend_node_modules: {}
+  postgres_data: {}
+  angular-cache: {}

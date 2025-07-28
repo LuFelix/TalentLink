@@ -1,0 +1,13 @@
+/* Não é necessário muito estilo para este diálogo simples, mas você pode adicionar conforme sua necessidade */
+mat-dialog-content {
+  margin-top: 15px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+mat-dialog-actions {
+  padding: 15px 0 0; // Ajusta o padding para os botões
+  button {
+    margin-left: 8px; // Espaçamento entre os botões
+  }
+}

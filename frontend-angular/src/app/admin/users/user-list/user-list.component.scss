@@ -1,0 +1,108 @@
+// Estilos gerais do card que contém a lista
+.user-list-card {
+  max-width: 900px;
+  margin: 20px auto;
+  width: 95%;
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 20px;
+}
+
+.no-users-message {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}
+
+/* --- Container da Tabela (Desktop/Tablet Grande) --- */
+.table-view-container {
+  // Nova classe para o contêiner da tabela
+  display: block; /* Visível por padrão em telas maiores */
+  overflow-x: auto; /* Permite rolagem horizontal se a tabela for muito larga */
+  width: 100%;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+table.mat-table {
+  // Seletor mais específico para a tabela
+  width: 100%;
+  min-width: 600px; // Garante que a tabela tenha uma largura mínima
+}
+
+/* Estilos de colunas da tabela */
+.mat-column-id {
+  flex: 0 0 50px;
+  width: 50px;
+}
+.mat-column-email {
+  flex: 1;
+  min-width: 200px;
+}
+.mat-column-roles {
+  flex: 0 0 150px;
+  min-width: 120px;
+}
+.mat-column-actions {
+  flex: 0 0 100px;
+  width: 100px;
+  padding-right: 16px;
+}
+
+/* --- Visualização em Card (Mobile/Tablet Pequeno) --- */
+.card-view-container {
+  // Nova classe para o contêiner dos cards
+  display: none; /* Escondido por padrão em telas maiores */
+  padding: 10px 0;
+}
+
+.user-card {
+  margin-bottom: 10px;
+  .card-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    &:not(:last-child) {
+      border-bottom: 1px dashed #eee;
+    }
+    strong {
+      flex-basis: 30%;
+      min-width: 80px;
+    }
+    span {
+      flex-basis: 70%;
+      text-align: right;
+    }
+  }
+  .card-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+  }
+}
+
+/* --- Media Queries para Alternar Visualizações --- */
+
+@media (max-width: 768px) {
+  .table-view-container {
+    display: none !important; /* Esconde a tabela e FORÇA a regra */
+  }
+
+  .card-view-container {
+    display: block !important; /* Mostra os cards e FORÇA a regra */
+  }
+}
+
+@media (min-width: 769px) {
+  .table-view-container {
+    display: block !important; /* Mostra a tabela e FORÇA a regra */
+  }
+
+  .card-view-container {
+    display: none !important; /* Esconde os cards e FORÇA a regra */
+  }
+}

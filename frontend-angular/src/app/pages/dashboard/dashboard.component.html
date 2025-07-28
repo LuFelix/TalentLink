@@ -1,0 +1,30 @@
+<div class="dashboard-container">
+  <mat-card class="dashboard-card">
+    <mat-card-header>
+      <mat-card-title>Bem-vindo ao seu Dashboard!</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p *ngIf="currentUser">Olá, {{ currentUser.email }}!</p>
+      <p *ngIf="currentUser">Suas roles: {{ currentUser.roles.join(", ") }}</p>
+
+      <p>
+        Aqui você verá um resumo das suas atividades e informações importantes.
+      </p>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" routerLink="/profile">
+          Ajustar Perfil
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          *ngIf="isAdmin"
+          routerLink="/admin/users"
+        >
+          Ir para Admin
+        </button>
+        <button mat-raised-button color="warn" (click)="logout()">Sair</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

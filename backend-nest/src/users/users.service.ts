@@ -1,9 +1,15 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt'; // Biblioteca para hash de senhas
 import { PaginationResult } from '../interfaces/pagination-result.interface.ts';
+import { Role } from '../auth/enums/role.enum';
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -28,6 +34,7 @@ export class UsersService {
     });
     return this.usersRepository.save(newUser);
   }
+
   async findAll(page: number, limit: number): Promise<PaginationResult<User>> {
     const skip = (page - 1) * limit;
 
@@ -45,5 +52,11 @@ export class UsersService {
       limit: limit,
       totalPages: Math.ceil(total / limit),
     };
+  }
+  async remove(id: number): Promise<void> {
+    const result = await this.usersRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`User with ID "${id}" not found.`);
+    }
   }
 }

@@ -2,6 +2,27 @@
   <mat-sidenav-content>
     <app-header (toggleSidenav)="sidenav.toggle()"></app-header>
     <router-outlet></router-outlet>
+    <app-footer
+      [style.display]="isLandingPageRoute ? 'block' : 'none'"
+    ></app-footer>
+    <!-- <app-footer *ngIf="!isLandingPageRoute"></app-footer> -->
+  </mat-sidenav-content>
+
+  <mat-sidenav #sidenav mode="over" position="end">
+    <mat-nav-list>
+      <a mat-list-item href="#about-us" (click)="sidenav.close()">Quem Somos</a>
+      <a mat-list-item href="#open-vacancies" (click)="sidenav.close()"
+        >Vagas Abertas</a
+      >
+      <a mat-list-item href="#contact" (click)="sidenav.close()">Contato</a>
+    </mat-nav-list>
+  </mat-sidenav>
+</mat-sidenav-container>
+
+<!-- <mat-sidenav-container class="sidenav-container">
+  <mat-sidenav-content>
+    <app-header (toggleSidenav)="sidenav.toggle()"></app-header>
+    <router-outlet></router-outlet>
     <app-footer></app-footer>
   </mat-sidenav-content>
 
@@ -15,3 +36,21 @@
     </mat-nav-list>
   </mat-sidenav>
 </mat-sidenav-container>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav-content>
+    <app-header (toggleSidenav)="sidenav.toggle()"></app-header>
+
+    <router-outlet></router-outlet>
+
+    <app-footer *ngIf="isLandingPageRoute"></app-footer>
+  </mat-sidenav-content>
+
+  <mat-sidenav #sidenav mode="over" position="end">
+    <mat-nav-list>
+      <a mat-list-item href="#about-us" (click)="sidenav.close()">Quem Somos</a>
+      <a mat-list-item href="#open-vacancies" (click)="sidenav.close()">Vagas Abertas</a>
+      <a mat-list-item href="#contact" (click)="sidenav.close()">Contato</a>
+    </mat-nav-list>
+  </mat-sidenav>
+</mat-sidenav-container> -->

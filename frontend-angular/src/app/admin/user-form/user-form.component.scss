@@ -1,0 +1,39 @@
+/* src/app/admin/user-form/user-form.component.scss */
+.user-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; // Alinha ao topo
+  min-height: calc(
+    100vh - 64px - 20px
+  ); // Ajusta a altura considerando o toolbar e margin/padding
+  padding: 20px;
+  box-sizing: border-box; // Inclui padding na largura/altura
+}
+
+.user-form-card {
+  width: 100%;
+  max-width: 500px; // Largura máxima do formulário
+}
+
+.full-width {
+  width: 100%;
+}
+
+.active-checkbox {
+  margin-bottom: 20px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+
+  button {
+    min-width: 120px; // Tamanho mínimo para os botões
+  }
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 20px;
+}

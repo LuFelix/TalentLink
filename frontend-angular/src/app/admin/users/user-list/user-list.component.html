@@ -1,66 +1,11 @@
-<!-- <!-- 
-<div class="user-list-container">
-  <div class="user-list-container">
-    <mat-card class="user-list-card">
-      <mat-card-header>
-        <mat-card-title>Gerenciamento de Usuários</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div *ngIf="isLoading" class="loading-spinner">
-          <mat-spinner></mat-spinner>
-          <p>Carregando usuários...</p>
-        </div>
-
-        <table
-          mat-table
-          [dataSource]="users"
-          class="mat-elevation-z8"
-          *ngIf="!isLoading"
-        >
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let user">{{ user.id }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef>Email</th>
-            <td mat-cell *matCellDef="let user">{{ user.email }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="roles">
-            <th mat-header-cell *matHeaderCellDef>Roles</th>
-            <td mat-cell *matCellDef="let user">{{ user.roles.join(", ") }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Ações</th>
-            <td mat-cell *matCellDef="let user">
-              <button
-                mat-icon-button
-                color="warn"
-                (click)="openDeleteDialog(user)"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-
-        <p *ngIf="!isLoading && users.length === 0" class="no-users-message">
-          Nenhum usuário encontrado.
-        </p>
-      </mat-card-content>
-    </mat-card>
-  </div>
-</div> -->
-
 <!-- <div class="user-list-container">
   <mat-card class="user-list-card">
     <mat-card-header>
       <mat-card-title>Gerenciamento de Usuários</mat-card-title>
+      <span class="header-spacer"></span>
+      <button mat-raised-button color="primary" (click)="addUser()">
+        <mat-icon>person_add</mat-icon> Adicionar Usuário
+      </button>
     </mat-card-header>
     <mat-card-content>
       <div *ngIf="isLoading" class="loading-spinner">
@@ -68,9 +13,9 @@
         <p>Carregando usuários...</p>
       </div>
 
-      <div *ngIf="!isLoading" class="table-view">
-        <div class="responsive-table-container mat-elevation-z8">
-          <table mat-table [dataSource]="users">
+      <div class="table-scroll-container" *ngIf="!isLoading">
+        <div class="table-view-container">
+          <table mat-table [dataSource]="users" class="mat-elevation-z8">
             <ng-container matColumnDef="id">
               <th mat-header-cell *matHeaderCellDef>ID</th>
               <td mat-cell *matCellDef="let user">{{ user.id }}</td>
@@ -91,6 +36,9 @@
             <ng-container matColumnDef="actions">
               <th mat-header-cell *matHeaderCellDef>Ações</th>
               <td mat-cell *matCellDef="let user">
+                <button mat-icon-button color="accent" (click)="editUser(user)">
+                  <mat-icon>edit</mat-icon>
+                </button>
                 <button
                   mat-icon-button
                   color="warn"
@@ -103,87 +51,31 @@
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+            <ng-container *ngIf="!isLoading && users.length === 0">
+              <tr class="mat-row" *matNoDataRowDef="displayedColumns">
+                <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                  Nenhum usuário encontrado.
+                </td>
+              </tr>
+            </ng-container>
           </table>
         </div>
+        <div *ngIf="isScrollingLoading" class="loading-spinner-small">
+          <mat-spinner [diameter]="24"></mat-spinner>
+          <p>Carregando mais usuários...</p>
+        </div>
       </div>
-
-      <div *ngIf="!isLoading" class="card-view">
-        <mat-card *ngFor="let user of users" class="user-card mat-elevation-z2">
-          <mat-card-content>
-            <div class="card-row">
-              <strong>ID:</strong> <span>{{ user.id }}</span>
-            </div>
-            <div class="card-row">
-              <strong>Email:</strong> <span>{{ user.email }}</span>
-            </div>
-            <div class="card-row">
-              <strong>Roles:</strong> <span>{{ user.roles.join(", ") }}</span>
-            </div>
-            <div class="card-actions">
-              <button
-                mat-icon-button
-                color="warn"
-                (click)="openDeleteDialog(user)"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-
-      <p *ngIf="!isLoading && users.length === 0" class="no-users-message">
-        Nenhum usuário encontrado.
-      </p>
-    </mat-card-content>
-  </mat-card>
-</div> -->
-
-<div class="user-list-container">
-  <mat-card class="user-list-card">
-    <mat-card-header>
-      <mat-card-title>Gerenciamento de Usuários</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div *ngIf="isLoading" class="loading-spinner">
-        <mat-spinner></mat-spinner>
-        <p>Carregando usuários...</p>
-      </div>
-
-      <div *ngIf="!isLoading" class="table-view-container">
-        <table mat-table [dataSource]="users" class="mat-elevation-z8">
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let user">{{ user.id }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef>Email</th>
-            <td mat-cell *matCellDef="let user">{{ user.email }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="roles">
-            <th mat-header-cell *matHeaderCellDef>Roles</th>
-            <td mat-cell *matCellDef="let user">{{ user.roles.join(", ") }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Ações</th>
-            <td mat-cell *matCellDef="let user">
-              <button
-                mat-icon-button
-                color="warn"
-                (click)="openDeleteDialog(user)"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-      </div>
+      <mat-paginator
+        [length]="totalUsers"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="currentPage - 1"
+        (page)="onPageChange($event)"
+        aria-label="Selecione a página de usuários"
+        *ngIf="!isLoading && users.length > 0"
+      >
+      </mat-paginator>
 
       <div *ngIf="!isLoading" class="card-view-container">
         <mat-card *ngFor="let user of users" class="user-card mat-elevation-z2">
@@ -198,6 +90,9 @@
               <strong>Roles:</strong> <span>{{ user.roles.join(", ") }}</span>
             </div>
             <div class="card-actions">
+              <button mat-icon-button color="accent" (click)="editUser(user)">
+                <mat-icon>edit</mat-icon>
+              </button>
               <button
                 mat-icon-button
                 color="warn"
@@ -208,11 +103,255 @@
             </div>
           </mat-card-content>
         </mat-card>
+        <p *ngIf="!isLoading && users.length === 0" class="no-users-message">
+          Nenhum usuário encontrado.
+        </p>
+        <div *ngIf="isScrollingLoading" class="loading-spinner-small">
+          <mat-spinner [diameter]="24"></mat-spinner>
+          <p>Carregando mais usuários...</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div> -->
+<!-- 
+<div class="user-list-container">
+  <mat-card class="user-list-card">
+    <mat-card-header>
+      <mat-card-title>Gerenciamento de Usuários</mat-card-title>
+      <span class="header-spacer"></span>
+      <button mat-raised-button color="primary" (click)="addUser()">
+        <mat-icon>person_add</mat-icon> Adicionar Usuário
+      </button>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="isLoading" class="loading-spinner">
+        <mat-spinner></mat-spinner>
+        <p>Carregando usuários...</p>
       </div>
 
-      <p *ngIf="!isLoading && users.length === 0" class="no-users-message">
-        Nenhum usuário encontrado.
-      </p>
+      <div
+        class="table-scroll-container"
+        *ngIf="!isLoading"
+        #tableScrollContainer
+      >
+        <div class="table-view-container">
+          <table mat-table [dataSource]="users" class="mat-elevation-z8">
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>ID</th>
+              <td mat-cell *matCellDef="let user">{{ user.id }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef>Email</th>
+              <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="roles">
+              <th mat-header-cell *matHeaderCellDef>Roles</th>
+              <td mat-cell *matCellDef="let user">
+                {{ user.roles.join(", ") }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Ações</th>
+              <td mat-cell *matCellDef="let user">
+                <button mat-icon-button color="accent" (click)="editUser(user)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="openDeleteDialog(user)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+            <ng-container *ngIf="!isLoading && users.length === 0">
+              <tr class="mat-row" *matNoDataRowDef="displayedColumns">
+                <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                  Nenhum usuário encontrado.
+                </td>
+              </tr>
+            </ng-container>
+          </table>
+        </div>
+        <div *ngIf="isScrollingLoading" class="loading-spinner-small">
+          <mat-spinner [diameter]="24"></mat-spinner>
+          <p>Carregando mais usuários...</p>
+        </div>
+      </div>
+      <mat-paginator
+        [length]="totalUsers"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="currentPage - 1"
+        (page)="onPageChange($event)"
+        aria-label="Selecione a página de usuários"
+        *ngIf="!isLoading && users.length > 0"
+      >
+      </mat-paginator>
+
+      <div *ngIf="!isLoading" class="card-view-container">
+        <mat-card *ngFor="let user of users" class="user-card mat-elevation-z2">
+          <mat-card-content>
+            <div class="card-row">
+              <strong>ID:</strong> <span>{{ user.id }}</span>
+            </div>
+            <div class="card-row">
+              <strong>Email:</strong> <span>{{ user.email }}</span>
+            </div>
+            <div class="card-row">
+              <strong>Roles:</strong> <span>{{ user.roles.join(", ") }}</span>
+            </div>
+            <div class="card-actions">
+              <button mat-icon-button color="accent" (click)="editUser(user)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="openDeleteDialog(user)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <p *ngIf="!isLoading && users.length === 0" class="no-users-message">
+          Nenhum usuário encontrado.
+        </p>
+        <div *ngIf="isScrollingLoading" class="loading-spinner-small">
+          <mat-spinner [diameter]="24"></mat-spinner>
+          <p>Carregando mais usuários...</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div> -->
+
+<div class="user-list-container">
+  <mat-card class="user-list-card">
+    <mat-card-header>
+      <mat-card-title>Gerenciamento de Usuários</mat-card-title>
+      <span class="header-spacer"></span>
+      <button mat-raised-button color="primary" (click)="addUser()">
+        <mat-icon>person_add</mat-icon> Adicionar Usuário
+      </button>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="isLoading" class="loading-spinner">
+        <mat-spinner></mat-spinner>
+        <p>Carregando usuários...</p>
+      </div>
+
+      <div class="table-scroll-container" #tableScrollContainer>
+        <div class="table-view-container" *ngIf="!isLoading">
+          <table mat-table [dataSource]="users" class="mat-elevation-z8">
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>ID</th>
+              <td mat-cell *matCellDef="let user">{{ user.id }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef>Email</th>
+              <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="roles">
+              <th mat-header-cell *matHeaderCellDef>Roles</th>
+              <td mat-cell *matCellDef="let user">
+                {{ user.roles.join(", ") }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Ações</th>
+              <td mat-cell *matCellDef="let user">
+                <button mat-icon-button color="accent" (click)="editUser(user)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="openDeleteDialog(user)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+            <ng-container *ngIf="!isLoading && users.length === 0">
+              <tr class="mat-row" *matNoDataRowDef="displayedColumns">
+                <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                  Nenhum usuário encontrado.
+                </td>
+              </tr>
+            </ng-container>
+          </table>
+        </div>
+        <div *ngIf="isScrollingLoading" class="loading-spinner-small">
+          <mat-spinner [diameter]="24"></mat-spinner>
+          <p>Carregando mais usuários...</p>
+        </div>
+        <p
+          *ngIf="!hasMorePages && users.length > 0 && !isLoading"
+          class="no-more-users-message"
+        >
+          Todos os usuários carregados.
+        </p>
+      </div>
+
+      <mat-paginator
+        [length]="totalUsers"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="currentPage - 1"
+        (page)="onPageChange($event)"
+        aria-label="Selecione a página de usuários"
+        *ngIf="!isLoading && users.length > 0"
+      >
+      </mat-paginator>
+
+      <div *ngIf="!isLoading" class="card-view-container">
+        <mat-card *ngFor="let user of users" class="user-card mat-elevation-z2">
+          <mat-card-content>
+            <div class="card-row">
+              <strong>ID:</strong> <span>{{ user.id }}</span>
+            </div>
+            <div class="card-row">
+              <strong>Email:</strong> <span>{{ user.email }}</span>
+            </div>
+            <div class="card-row">
+              <strong>Roles:</strong> <span>{{ user.roles.join(", ") }}</span>
+            </div>
+            <div class="card-actions">
+              <button mat-icon-button color="accent" (click)="editUser(user)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="openDeleteDialog(user)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <p *ngIf="!isLoading && users.length === 0" class="no-users-message">
+          Nenhum usuário encontrado.
+        </p>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

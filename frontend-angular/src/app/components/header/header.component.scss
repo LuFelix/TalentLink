@@ -164,6 +164,11 @@
       }
     }
   }
+  // Botão - Visível para usuários logados
+  .feed-button {
+    margin-right: 12px; /* Adiciona um espaço de 16px à direita do botão */
+    /* Você pode ajustar este valor (ex: 8px, 24px) para o espaçamento desejado */
+  }
 
   // Botão de menu (Hambúrguer) - Visível em mobile
   .menu-button {

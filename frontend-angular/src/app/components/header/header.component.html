@@ -4,6 +4,59 @@
     <span class="logo-text">Talent Link</span>
   </a>
 
+  <span class="toolbar-spacer"></span>
+
+  <div
+    class="header-public-actions"
+    *ngIf="(isAuthenticated$ | async) === false"
+  >
+    <nav class="main-nav">
+      <a mat-button routerLink="#about-us">Quem Somos</a>
+      <a mat-button routerLink="#open-vacancies">Vagas Abertas</a>
+      <a mat-button routerLink="#contact">Contato</a>
+    </nav>
+    <button mat-icon-button class="menu-button" (click)="toggleSidenav.emit()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <button mat-flat-button color="accent" routerLink="/login">Entrar</button>
+  </div>
+
+  <div class="header-app-actions" *ngIf="isAuthenticated$ | async">
+    <button mat-icon-button (click)="openNotifications()">
+      <mat-icon matBadge="3" matBadgeColor="accent">notifications</mat-icon>
+    </button>
+
+    <button mat-icon-button routerLink="/settings">
+      <mat-icon>help_outline</mat-icon>
+    </button>
+
+    <button mat-button [matMenuTriggerFor]="profileMenu" class="profile-button">
+      <img
+        src="image-placeholder-user.jpg"
+        alt="Perfil"
+        class="profile-avatar"
+      />
+    </button>
+    <mat-menu #profileMenu="matMenu">
+      <button mat-menu-item routerLink="/profile">
+        <mat-icon>person</mat-icon> Meu Perfil
+      </button>
+      <button mat-menu-item routerLink="/dashboard">
+        <mat-icon>dashboard</mat-icon> Dashboard
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon> Sair
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
+
+<!-- <mat-toolbar color="primary" class="header-toolbar">
+  <a href="#" class="logo">
+    <img src="assets/logo-ts.png" alt="Talent Link Logo" />
+    <span class="logo-text">Talent Link</span>
+  </a>
+
   <nav class="main-nav">
     <a mat-button href="#about-us">Quem Somos</a>
     <a mat-button href="#open-vacancies">Vagas Abertas</a>
@@ -42,4 +95,4 @@
       Sair
     </button>
   </div>
-</mat-toolbar>
+</mat-toolbar> -->

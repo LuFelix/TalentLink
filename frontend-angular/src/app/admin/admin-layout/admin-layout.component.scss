@@ -1,34 +1,48 @@
-//@use "@angular/material" as mat; // Módulo do Angular Material
-//@use "../../../main";
-
+// O container principal da área administrativa (mat-sidenav-container)
+// Sua altura deve ser ajustada para não "invadir" o header principal da aplicação.
 .admin-sidenav-container {
-  height: 100vh; // Ocupa a altura total da viewport
+  // Ajusta a altura: 100% da viewport MENOS a altura do seu 'app-header' (main-toolbar).
+  // Supondo que o main-toolbar tem 56px em desktop e 48px em mobile.
+  height: calc(100vh - 56px);
+  overflow: hidden; // Previne barras de rolagem duplas no container principal
 
+  // Ajuste para telas menores (mobile)
+  @media (max-width: 768px) {
+    height: calc(100vh - 48px); // Se o app-header for 48px em mobile
+  }
+
+  // Estilos do menu lateral (mat-sidenav)
   .admin-sidenav {
     width: 250px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05); // Sua sombra original
 
+    // Cabeçalho do menu lateral (mat-toolbar dentro da sidenav)
     mat-toolbar {
+      position: sticky; // Fixa o cabeçalho da sidebar no topo da sidebar
+      top: 0;
+      z-index: 10; // Acima da lista
       font-size: 20px;
       font-weight: 500;
       color: white; // Cor do texto
+      flex-shrink: 0; // Impede que encolha
     }
 
+    // Lista de navegação (mat-nav-list dentro da sidenav)
     mat-nav-list {
       padding-top: 0;
+      flex-grow: 1; // Permite que a lista ocupe o espaço restante e role
+      overflow-y: auto; // Habilita a rolagem interna para a lista de links
 
       .mat-list-item {
         font-size: 16px;
         height: 50px; // Altura padrão do item
+        // Seu estilo para o link ativo (mat.get-color-from-palette desativado)
         &.active-link {
           background-color: rgba(0, 0, 0, 0.04);
-          // color: mat.get-color-from-palette(
-          //   $mat-primary,
-          //   500
-          // ); // Exemplo de cor primária
           color: #3f51b5;
           font-weight: 500;
         }
+        // Ícone dentro do item da lista
         mat-icon {
           margin-right: 10px;
         }
@@ -36,19 +50,40 @@
     }
   }
 
+  // Área de conteúdo principal (mat-sidenav-content)
   .admin-sidenav-content {
-    .admin-toolbar {
-      height: 64px; // Altura padrão de toolbars grandes
-      .toolbar-spacer {
-        flex: 1 1 auto; // Empurra os itens para os lados
-      }
-      button {
-        color: white; // Botões no toolbar
-      }
-    }
+    display: flex; // Container flexível
+    flex-direction: column; // Conteúdo organizado em coluna (toolbar em cima, corpo embaixo)
+    height: 100%; // Ocupa 100% da altura do admin-sidenav-container
+    width: 100%; // Ocupa 100% da largura
+  }
 
-    .admin-content {
-      padding: 20px;
+  // Toolbar do cabeçalho da área administrativa (fixo)
+  .admin-toolbar {
+    height: 64px; // Altura padrão de toolbars grandes
+    min-height: 64px; // Garante que não diminua
+    position: sticky; // Fixa o toolbar ao topo
+    top: 0; // No topo da área de rolagem
+    z-index: 500; // Garante que fique acima do conteúdo
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05); // Sombra sutil
+    flex-shrink: 0; // IMPEDE que o toolbar encolha
+    padding: 0 24px; // Padding interno
+    background-color: var(
+      --mat-toolbar-container-background-color
+    ); // Pega a cor do tema
+
+    .toolbar-spacer {
+      flex: 1 1 auto; // Empurra os itens para os lados
     }
+    button {
+      color: white; // Cor dos botões no toolbar
+    }
+  }
+
+  // Área de conteúdo que irá rolar (router-outlet está aqui dentro)
+  .admin-content {
+    flex-grow: 1; // Ocupa todo o espaço restante verticalmente
+    overflow-y: auto; // HABILITA A ROLAGEM APENAS DENTRO DESTA DIV
+    padding: 20px; // Padding interno para o conteúdo das páginas
   }
 }

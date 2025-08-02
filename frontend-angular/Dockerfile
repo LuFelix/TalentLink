@@ -68,6 +68,9 @@ RUN mkdir -p /usr/src/app && \
 
 WORKDIR /usr/src/app
 
+# Instalar Angular CLI globalmente como root, antes de mudar de usuário
+RUN npm install -g @angular/cli
+
 # 3. Copiar arquivos de configuração como usuário node
 COPY --chown=node:node package*.json ./
 

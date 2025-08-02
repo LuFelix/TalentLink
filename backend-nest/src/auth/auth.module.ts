@@ -17,7 +17,7 @@ import { JwtStrategy } from './strategies/jwt.strategy'; // Estratégia de valid
       imports: [ConfigModule], // Importa ConfigModule para injetar ConfigService
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'), // Pega a chave secreta do ambiente
-        signOptions: { expiresIn: '60s' }, // Token expira em 60 segundos (ajustar para mais em prod)
+        signOptions: { expiresIn: '1h' }, // Token expira em 60 segundos (ajustar para mais em prod)
       }),
       inject: [ConfigService], // Injeta ConfigService
     }),

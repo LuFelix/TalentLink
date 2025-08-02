@@ -21,5 +21,5 @@ export class User {
     array: false,
     default: () => '\'["user"]\'::jsonb',
   })
-  roles: Role[];
+  roles: string[];
 }

@@ -1,108 +1,654 @@
-// Estilos gerais do card que contém a lista
+// // Estilos gerais do card que contém a lista
+// // .user-list-card {
+// //   max-width: 900px;
+// //   margin: 20px auto;
+// //   width: 95%;
+// // }
+// .user-list-card {
+//   .mat-card-header {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     padding-bottom: 0; // Ajuste o padding se necessário
+
+//     // Estilo para o botão "Adicionar Usuário" dentro do cabeçalho
+//     button[mat-raised-button] {
+//       font-size: 0.8em; // Reduz o tamanho da fonte
+//       padding: 6px 12px; // Ajusta o padding para diminuir o tamanho geral
+//       line-height: 1.5; // Ajusta a altura da linha para centralizar o texto/ícone
+//       height: auto; // Permite que a altura se ajuste ao conteúdo
+//       .mat-icon {
+//         font-size: 1.1em; // Ajusta o tamanho do ícone se necessário
+//         width: 1.1em;
+//         height: 1.1em;
+//         margin-right: 4px; // Espaçamento entre ícone e texto
+//       }
+//     }
+//   }
+
+//   .header-spacer {
+//     flex: 1 1 auto;
+//   }
+// }
+
+// .loading-spinner {
+//   text-align: center;
+//   padding: 20px;
+// }
+
+// .no-users-message {
+//   text-align: center;
+//   padding: 20px;
+//   color: #777;
+// }
+
+// /* --- Container da Tabela (Desktop/Tablet Grande) --- */
+// .table-view-container {
+//   // Nova classe para o contêiner da tabela
+//   display: block; /* Visível por padrão em telas maiores */
+//   overflow-x: auto; /* Permite rolagem horizontal se a tabela for muito larga */
+//   width: 100%;
+//   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+//     0 1px 5px 0 rgba(0, 0, 0, 0.12);
+// }
+
+// table.mat-table {
+//   // Seletor mais específico para a tabela
+//   width: 100%;
+//   min-width: 600px; // Garante que a tabela tenha uma largura mínima
+// }
+
+// /* Estilos de colunas da tabela */
+// .mat-column-id {
+//   flex: 0 0 50px;
+//   width: 50px;
+// }
+// .mat-column-email {
+//   flex: 1;
+//   min-width: 200px;
+// }
+// .mat-column-roles {
+//   flex: 0 0 150px;
+//   min-width: 120px;
+// }
+// .mat-column-actions {
+//   flex: 0 0 100px;
+//   width: 100px;
+//   padding-right: 16px;
+// }
+
+// /* --- Visualização em Card (Mobile/Tablet Pequeno) --- */
+// .card-view-container {
+//   // Nova classe para o contêiner dos cards
+//   display: none; /* Escondido por padrão em telas maiores */
+//   padding: 10px 0;
+// }
+
+// .user-card {
+//   margin-bottom: 10px;
+//   .card-row {
+//     display: flex;
+//     justify-content: space-between;
+//     padding: 4px 0;
+//     &:not(:last-child) {
+//       border-bottom: 1px dashed #eee;
+//     }
+//     strong {
+//       flex-basis: 30%;
+//       min-width: 80px;
+//     }
+//     span {
+//       flex-basis: 70%;
+//       text-align: right;
+//     }
+//   }
+//   .card-actions {
+//     display: flex;
+//     justify-content: flex-end;
+//     margin-top: 10px;
+//     border-top: 1px solid #eee;
+//     padding-top: 10px;
+//   }
+// }
+
+// /* --- Media Queries para Alternar Visualizações --- */
+
+// @media (max-width: 768px) {
+//   .table-view-container {
+//     display: none !important; /* Esconde a tabela e FORÇA a regra */
+//   }
+
+//   .card-view-container {
+//     display: block !important; /* Mostra os cards e FORÇA a regra */
+//   }
+// }
+
+// @media (min-width: 769px) {
+//   .table-view-container {
+//     display: block !important; /* Mostra a tabela e FORÇA a regra */
+//   }
+
+//   .card-view-container {
+//     display: none !important; /* Esconde os cards e FORÇA a regra */
+//   }
+// }
+
+.add-user-button-container {
+  display: flex;
+  justify-content: flex-end; /* Alinha o botão à direita */
+  padding: 16px; /* Espaçamento */
+  border-bottom: 1px solid #eee; /* Linha divisória opcional */
+  margin-bottom: 16px; /* Espaçamento abaixo do botão */
+}
+
+/* user-list.component.scss */
+
+// .user-list-container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: flex-start;
+//   padding: 20px;
+//   box-sizing: border-box;
+// }
+
+// .user-list-card {
+//   width: 100%;
+//   max-width: 1200px;
+//   margin: 0 auto;
+
+//   .mat-card-header {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     padding-bottom: 0;
+
+//     button[mat-raised-button] {
+//       font-size: 0.8em;
+//       padding: 6px 12px;
+//       line-height: 1.5;
+//       height: auto;
+//       .mat-icon {
+//         font-size: 1.1em;
+//         width: 1.1em;
+//         height: 1.1em;
+//         margin-right: 4px;
+//       }
+//     }
+//   }
+
+//   .header-spacer {
+//     flex: 1 1 auto;
+//   }
+// }
+
+// .loading-spinner {
+//   text-align: center;
+//   padding: 20px;
+// }
+
+// .no-users-message {
+//   text-align: center;
+//   padding: 20px;
+//   color: #757575;
+// }
+
+// /* Estilos para a rolagem infinita na tabela */
+// .table-scroll-container {
+//   max-height: 500px; /* Defina uma altura máxima para a área de rolagem */
+//   overflow-y: auto; /* Habilita a rolagem vertical */
+//   margin-bottom: 16px; /* Espaço antes do paginator */
+//   position: relative;
+// }
+
+// .table-view-container {
+//   width: 100%;
+//   overflow-x: auto; /* Para rolagem horizontal da tabela em telas pequenas */
+//   -webkit-overflow-scrolling: touch; /* Melhorar a rolagem em iOS */
+// }
+
+// /* Estilo para o spinner de carregamento da rolagem */
+// .loading-spinner-small {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   padding: 10px 0;
+//   color: #757575;
+//   mat-spinner {
+//     margin-bottom: 8px;
+//   }
+// }
+
+// /* Estilos da visualização em cards (responsividade) */
+// .card-view-container {
+//   display: none; /* Oculto por padrão para desktop */
+//   flex-wrap: wrap;
+//   gap: 16px;
+//   padding: 16px 0;
+// }
+
+// .user-card {
+//   flex: 1 1 calc(50% - 16px); /* 2 cards por linha em telas médias */
+//   box-sizing: border-box;
+//   margin-bottom: 0; /* Removido o margin-bottom pois o gap já resolve */
+
+//   .card-row {
+//     margin-bottom: 8px;
+//     strong {
+//       font-weight: 500;
+//       margin-right: 8px;
+//     }
+//   }
+
+//   .card-actions {
+//     display: flex;
+//     justify-content: flex-end; /* Alinha os botões à direita */
+//     margin-top: 16px;
+//   }
+// }
+
+// /* Media query para telas pequenas - visualização em cards */
+// @media (max-width: 768px) {
+//   .table-view-container {
+//     display: none; /* Oculta a tabela em telas pequenas */
+//   }
+
+//   .card-view-container {
+//     display: flex; /* Exibe os cards em telas pequenas */
+//     flex-direction: column; /* 1 card por linha em telas muito pequenas */
+//     .user-card {
+//       flex: 1 1 100%; /* Um card por linha em telas pequenas */
+//     }
+//   }
+//   .mat-paginator {
+//     // Esconder o paginator nas telas menores ou simplificá-lo se a rolagem infinita for a principal
+//     // display: none;
+//     font-size: 0.7em;
+//   }
+//   .user-list-card .mat-card-header {
+//     flex-direction: column;
+//     align-items: flex-start;
+//     .header-spacer {
+//       display: none;
+//     }
+//     button[mat-raised-button] {
+//       margin-top: 8px;
+//       width: 100%;
+//     }
+//   }
+// }
+
+// @media (min-width: 769px) and (max-width: 1024px) {
+//   .user-card {
+//     flex: 1 1 calc(50% - 16px); /* 2 cards por linha */
+//   }
+// }
+
+/* src/app/admin/user-list/user-list.component.scss */
+
+// .user-list-container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: flex-start;
+//   padding: 20px;
+//   box-sizing: border-box;
+//   width: 100%; /* Garante que o container ocupe a largura total */
+// }
+
+// .user-list-card {
+//   width: 100%;
+//   max-width: 1200px; /* Limite a largura máxima para o card principal */
+//   margin: 0 auto; /* Centraliza o card */
+//   padding-bottom: 0; /* Ajuste para evitar padding extra na parte inferior do card se o paginator estiver fora */
+
+//   .mat-card-header {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     padding-bottom: 16px; /* Adiciona um padding na parte de baixo do header */
+
+//     button[mat-raised-button] {
+//       font-size: 0.8em;
+//       padding: 6px 12px;
+//       line-height: 1.5;
+//       height: auto;
+//       .mat-icon {
+//         font-size: 1.1em;
+//         width: 1.1em;
+//         height: 1.1em;
+//         margin-right: 4px;
+//       }
+//     }
+//   }
+
+//   .header-spacer {
+//     flex: 1 1 auto;
+//   }
+// }
+
+// .loading-spinner {
+//   text-align: center;
+//   padding: 20px;
+//   display: flex; /* Para centralizar com flexbox */
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   min-height: 200px; /* Garante que o spinner tenha um espaço mínimo */
+// }
+
+// .no-users-message {
+//   text-align: center;
+//   padding: 20px;
+//   color: #757575;
+// }
+
+// /* --- ESTILOS CRUCIAIS PARA A ROLAGEM INFINITA DA TABELA --- */
+// .table-scroll-container {
+//   max-height: 500px; /* **ESSENCIAL**: Define a altura máxima para o container da rolagem */
+//   overflow-y: auto; /* **ESSENCIAL**: Habilita a barra de rolagem vertical quando o conteúdo excede max-height */
+//   margin-bottom: 16px; /* Espaço antes do paginator */
+//   position: relative; /* Importante para posicionamento de elementos filhos (ex: spinner) */
+//   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1); /* Um leve sombreado interno para indicar área de rolagem */
+//   border-radius: 4px; /* Bordas arredondadas para o container */
+// }
+
+// .table-view-container {
+//   width: 100%;
+//   overflow-x: auto; /* Para rolagem horizontal da tabela em telas pequenas (se a tabela for muito larga) */
+//   -webkit-overflow-scrolling: touch; /* Melhorar a rolagem em dispositivos iOS */
+// }
+
+// table.mat-table {
+//   width: 100%; /* Garante que a tabela ocupe 100% da largura do seu container */
+//   min-width: 700px; /* Opcional: Garante uma largura mínima para a tabela, evita colunas muito espremidas */
+// }
+
+// /* Estilo para o spinner de carregamento da rolagem (aparece no final da rolagem) */
+// .loading-spinner-small {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   padding: 10px 0;
+//   color: #757575;
+//   mat-spinner {
+//     margin-bottom: 8px;
+//   }
+// }
+
+// /* Estilos da visualização em cards (para telas que não usam a tabela) */
+// .card-view-container {
+//   display: none; /* Por padrão, a view de cards está oculta no desktop. A tabela é a principal. */
+//   flex-wrap: wrap;
+//   gap: 16px;
+//   padding: 16px 0;
+// }
+
+// .user-card {
+//   flex: 1 1 calc(50% - 16px); /* 2 cards por linha em telas médias */
+//   box-sizing: border-box;
+//   margin-bottom: 0; /* Removido o margin-bottom pois o gap já resolve */
+
+//   .card-row {
+//     margin-bottom: 8px;
+//     strong {
+//       font-weight: 500;
+//       margin-right: 8px;
+//     }
+//   }
+
+//   .card-actions {
+//     display: flex;
+//     justify-content: flex-end; /* Alinha os botões à direita */
+//     margin-top: 16px;
+//   }
+// }
+
+// /* --- Media Queries: Definindo qual visualização aparece em cada tamanho de tela --- */
+
+// /* Telas pequenas (até 768px): Prioriza a visualização em cards */
+// @media (max-width: 768px) {
+//   .table-scroll-container,
+//   .mat-paginator {
+//     display: none; /* Oculta a tabela e o paginador em telas pequenas */
+//   }
+
+//   .card-view-container {
+//     display: flex; /* Exibe os cards em telas pequenas */
+//     flex-direction: column; /* Um card por linha em telas muito pequenas */
+//     .user-card {
+//       flex: 1 1 100%; /* Garante um card por linha */
+//     }
+//   }
+
+//   .user-list-card .mat-card-header {
+//     flex-direction: column;
+//     align-items: flex-start;
+//     .header-spacer {
+//       display: none;
+//     }
+//     button[mat-raised-button] {
+//       margin-top: 8px;
+//       width: 100%;
+//     }
+//   }
+// }
+
+// /* Telas médias (entre 769px e 1024px): Exibe a tabela e mantém a responsividade */
+// @media (min-width: 769px) {
+//   .table-scroll-container,
+//   .mat-paginator {
+//     display: block; /* Garante que a tabela e paginador sejam exibidos */
+//   }
+
+//   .card-view-container {
+//     display: none; /* Oculta a visualização de cards */
+//   }
+
+//   /* Se você quiser cards nesta faixa de tamanho, você precisaria de uma lógica diferente no HTML/TS */
+//   /* ou ajustar os flexbox do card-view-container aqui. Mas para rolagem, mantemos a tabela. */
+// }
+
+// /* Telas grandes (acima de 1024px): Exibe a tabela */
+// @media (min-width: 1025px) {
+//   .table-scroll-container,
+//   .mat-paginator {
+//     display: block;
+//   }
+//   .card-view-container {
+//     display: none;
+//   }
+//   .user-list-card {
+//     padding: 20px; /* Adiciona um padding interno ao card para espaçamento */
+//   }
+// }
+
+/* src/app/admin/user-list/user-list.component.scss */
+
+.user-list-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100vh; /* Garante que o container ocupe a altura total da viewport */
+}
+
 .user-list-card {
-  max-width: 900px;
-  margin: 20px auto;
-  width: 95%;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex; /* Adicionado para flexbox */
+  flex-direction: column; /* Conteúdo em coluna */
+  flex-grow: 1; /* Permite que o card cresça para preencher o espaço disponível */
+  min-height: 0; /* Ajuda a evitar que o conteúdo exceda a altura do pai em flexbox */
+
+  .mat-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+
+    button[mat-raised-button] {
+      font-size: 0.6em;
+      padding: 6px 12px;
+      line-height: 0.5;
+      height: auto;
+
+      .mat-icon {
+        font-size: 0.5em;
+        width: 1.1em;
+        height: 1.1em;
+        margin-right: 0.5em;
+      }
+    }
+  }
+
+  .header-spacer {
+    flex: 1 1 auto;
+  }
+
+  // --- ADICIONADO/AJUSTADO: Estilos para o mat-card-content ---
+  mat-card-content {
+    display: flex; /* Transforma o conteúdo em um container flex */
+    flex-direction: column; /* Organiza os itens em coluna */
+    flex-grow: 1; /* Permite que o conteúdo cresça */
+    overflow: hidden; /* **CRUCIAL**: Oculta qualquer overflow para evitar barras de rolagem duplas ou indesejadas */
+    padding-top: 0; /* Ajuste se necessário para o espaçamento */
+    padding-bottom: 0; /* Ajuste se necessário para o espaçamento */
+  }
 }
 
 .loading-spinner {
   text-align: center;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
 }
 
 .no-users-message {
   text-align: center;
   padding: 20px;
-  color: #777;
+  color: #757575;
 }
 
-/* --- Container da Tabela (Desktop/Tablet Grande) --- */
+/* --- ESTILOS CRUCIAIS PARA A ROLAGEM INFINITA DA TABELA --- */
+.table-scroll-container {
+  max-height: 500px; /* **ESSENCIAL**: Define a altura máxima. Tente reduzir para 300px para testar! */
+  overflow-y: auto; /* **ESSENCIAL**: Habilita a barra de rolagem vertical */
+  margin-bottom: 16px;
+  position: relative;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  flex-grow: 1; /* Permite que ele ocupe o espaço disponível dentro do mat-card-content */
+  min-height: 0; /* Importante para flexbox e overflow */
+}
+
 .table-view-container {
-  // Nova classe para o contêiner da tabela
-  display: block; /* Visível por padrão em telas maiores */
-  overflow-x: auto; /* Permite rolagem horizontal se a tabela for muito larga */
   width: 100%;
-  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 table.mat-table {
-  // Seletor mais específico para a tabela
   width: 100%;
-  min-width: 600px; // Garante que a tabela tenha uma largura mínima
+  min-width: 700px;
 }
 
-/* Estilos de colunas da tabela */
-.mat-column-id {
-  flex: 0 0 50px;
-  width: 50px;
-}
-.mat-column-email {
-  flex: 1;
-  min-width: 200px;
-}
-.mat-column-roles {
-  flex: 0 0 150px;
-  min-width: 120px;
-}
-.mat-column-actions {
-  flex: 0 0 100px;
-  width: 100px;
-  padding-right: 16px;
-}
-
-/* --- Visualização em Card (Mobile/Tablet Pequeno) --- */
-.card-view-container {
-  // Nova classe para o contêiner dos cards
-  display: none; /* Escondido por padrão em telas maiores */
+.loading-spinner-small {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 10px 0;
+  color: #757575;
+  mat-spinner {
+    margin-bottom: 8px;
+  }
+}
+
+/* Estilos da visualização em cards (para telas que não usam a tabela) */
+.card-view-container {
+  display: none;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px 0;
+  flex-grow: 1; /* Para que ele ocupe o espaço quando visível */
+  overflow-y: auto; /* Pode ser necessário rolagem para os cards também se forem muitos */
 }
 
 .user-card {
-  margin-bottom: 10px;
+  flex: 1 1 calc(50% - 16px);
+  box-sizing: border-box;
+  margin-bottom: 0;
+
   .card-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 4px 0;
-    &:not(:last-child) {
-      border-bottom: 1px dashed #eee;
-    }
+    margin-bottom: 8px;
     strong {
-      flex-basis: 30%;
-      min-width: 80px;
-    }
-    span {
-      flex-basis: 70%;
-      text-align: right;
+      font-weight: 500;
+      margin-right: 8px;
     }
   }
+
   .card-actions {
     display: flex;
     justify-content: flex-end;
-    margin-top: 10px;
-    border-top: 1px solid #eee;
-    padding-top: 10px;
+    margin-top: 16px;
   }
 }
 
-/* --- Media Queries para Alternar Visualizações --- */
+/* --- Media Queries: Definindo qual visualização aparece em cada tamanho de tela --- */
 
 @media (max-width: 768px) {
-  .table-view-container {
-    display: none !important; /* Esconde a tabela e FORÇA a regra */
+  .user-list-card {
+    min-height: auto; /* Volta ao normal para cards */
+  }
+  mat-card-content {
+    overflow: visible; /* Permite rolagem do corpo da página se os cards excederem */
+  }
+  .table-scroll-container,
+  .mat-paginator {
+    display: none;
   }
 
   .card-view-container {
-    display: block !important; /* Mostra os cards e FORÇA a regra */
+    display: flex;
+    flex-direction: column;
+    .user-card {
+      flex: 1 1 100%;
+    }
+  }
+
+  .user-list-card .mat-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    .header-spacer {
+      display: none;
+    }
+    button[mat-raised-button] {
+      margin-top: 8px;
+      width: 100%;
+    }
   }
 }
 
 @media (min-width: 769px) {
-  .table-view-container {
-    display: block !important; /* Mostra a tabela e FORÇA a regra */
+  .table-scroll-container,
+  .mat-paginator {
+    display: block;
   }
 
   .card-view-container {
-    display: none !important; /* Esconde os cards e FORÇA a regra */
+    display: none;
+  }
+  .user-list-card {
+    padding: 0; /* Remove padding extra do card para deixar mat-card-content gerenciar */
+  }
+  mat-card-content {
+    padding: 16px; /* Adiciona padding ao conteúdo do card */
   }
 }

@@ -1,9 +1,4 @@
 <mat-toolbar color="primary" class="header-toolbar">
-  <!-- <div class="logo">
-    <img src="assets/logo-ts.png" alt="Talent Link" />
-    <span class="logo-text">Talent Link</span>
-  </div> -->
-
   <a href="#" class="logo">
     <img src="assets/logo-ts.png" alt="Talent Link Logo" />
     <span class="logo-text">Talent Link</span>
@@ -14,9 +9,19 @@
     <a mat-button href="#open-vacancies">Vagas Abertas</a>
     <a mat-button href="#contact">Contato</a>
   </nav>
-
+  <span class="toolbar-spacer"></span>
   <button mat-icon-button class="menu-button" (click)="toggleSidenav.emit()">
     <mat-icon>menu</mat-icon>
+  </button>
+
+  <button
+    mat-flat-button
+    color="accent"
+    routerLink="/dashboard"
+    *ngIf="isAuthenticated$ | async"
+    class="feed-button"
+  >
+    <mat-icon>dashboard</mat-icon> Feed
   </button>
 
   <div class="header-actions">

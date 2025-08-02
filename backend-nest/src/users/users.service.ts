@@ -8,7 +8,7 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt'; // Biblioteca para hash de senhas
 import { PaginationResult } from '../interfaces/pagination-result.interface.ts';
-import { Role } from '../auth/enums/role.enum';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -17,11 +17,25 @@ export class UsersService {
     private usersRepository: Repository<User>, // Injeta o repositório do TypeORM para User
   ) {}
 
-  async findOne(email: string): Promise<User | undefined> {
+  async findByEmail(email: string): Promise<User | undefined> {
+    // Pode retornar undefined se não encontrar
     return this.usersRepository.findOne({ where: { email } });
   }
 
-  async create(email: string, password: string): Promise<User> {
+  async findOne(id: number): Promise<User> {
+    const user = await this.usersRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new NotFoundException(`Usuário com ID ${id} não encontrado.`);
+    }
+    return user;
+  }
+
+  async create(
+    email: string,
+    password: string,
+    roles: string[] = ['user'],
+    isActive: boolean = true,
+  ): Promise<User> {
     // Hashear a senha antes de salvar
     if (!password) {
       throw new BadRequestException('Password é um campo obrigatório.');
@@ -30,7 +44,8 @@ export class UsersService {
     const newUser = this.usersRepository.create({
       email,
       password: hashedPassword,
-      isActive: true, // Por padrão, o novo usuário é ativo
+      isActive, // Por padrão, o novo usuário é ativo
+      roles,
     });
     return this.usersRepository.save(newUser);
   }
@@ -53,6 +68,28 @@ export class UsersService {
       totalPages: Math.ceil(total / limit),
     };
   }
+  async update(id: number, updateUserData: UpdateUserDto): Promise<User> {
+    const user = await this.usersRepository.findOne({ where: { id } });
+
+    if (!user) {
+      throw new NotFoundException(`Usuário com ID ${id} não encontrado.`);
+    }
+
+    // Se uma nova senha for fornecida, faça o hash
+    if (updateUserData.password) {
+      updateUserData.password = await bcrypt.hash(updateUserData.password, 10);
+    }
+
+    // Mescla os dados atualizados com o usuário existente
+    // Object.assign(user, updateUserData); // Uma forma alternativa simples
+
+    // O TypeORM update method is more efficient for partial updates
+    await this.usersRepository.update(id, updateUserData);
+
+    // Retorna o usuário atualizado (buscamos novamente para ter os dados mais recentes)
+    return this.usersRepository.findOne({ where: { id } });
+  }
+
   async remove(id: number): Promise<void> {
     const result = await this.usersRepository.delete(id);
     if (result.affected === 0) {

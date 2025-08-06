@@ -15,6 +15,10 @@ import {
   Req, // Importe Req para acessar o objeto request
   Patch,
   NotFoundException,
+  UseInterceptors, // Importe UseInterceptors
+  UploadedFile, // Importe UploadedFile
+  Put, // Importe Put para a rota de atualização
+  BadRequestException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -22,12 +26,20 @@ import { RolesGuard } from '../auth/guards/roles.guards';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/enums/role.enum';
 import { PaginationResult } from '../interfaces/pagination-result.interface.ts';
-import { ApiBearerAuth, ApiTags, ApiQuery, ApiParam } from '@nestjs/swagger';
+import {
+  ApiResponse,
+  ApiBearerAuth,
+  ApiTags,
+  ApiQuery,
+  ApiParam,
+} from '@nestjs/swagger';
 import { Public } from '../auth/decorators/public.decorator';
-
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-
+import { FileInterceptor } from '@nestjs/platform-express'; // Importe FileInterceptor
+import { diskStorage } from 'multer'; // Importe diskStorage
+import { extname } from 'path'; // Importe extname
+import { User } from '../users/user.entity'; // Importe a entidade User
 @ApiTags('Users')
 @Controller('users') // Define a rota base para este controlador como '/users'
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -48,25 +60,34 @@ export class UsersController {
     const { password, ...result } = user;
     return result;
   }
-
-  @Get() // Define uma rota GET para '/users'
-  @Roles(Role.Admin) // Apenas usuários com a role 'Admin' podem acessar
-  @ApiBearerAuth() // Indica ao Swagger que este endpoint requer um token JWT
-  @ApiQuery({
-    name: 'page',
-    required: false,
-    type: Number,
-    description: 'Número da página (padrão: 1)',
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: false,
-    type: Number,
-    description: 'Itens por página (padrão: 10)',
-  })
+  // --- ROTA PARA LISTAR USUÁRIOS COM PAGINAÇÃO ---
+  // Esta rota permite que usuários com a role 'Admin' vejam todos os usuários com paginação.
+  // A rota é protegida por JwtAuthGuard e RolesGuard, garantindo que apenas usuários autenticados e autorizados possam acessá-la.
+  // A paginação é feita através de query parameters 'page' e 'limit', com valores padrão de 1 e 10,
+  // respectivamente. O resultado é um objeto PaginationResult que inclui os usuários e informações de paginação.
+  // A rota é documentada com Swagger usando ApiBearerAuth e ApiQuery decorators para
+  // descrever os parâmetros de consulta esperados.
+  // @Get() // Define uma rota GET para '/users'
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.Admin) // Apenas usuários com a role 'Admin' podem acessar
+  // @ApiBearerAuth() // Indica ao Swagger que este endpoint requer um token JWT
+  // @ApiQuery({
+  //   name: 'page',
+  //   required: false,
+  //   type: Number,
+  //   description: 'Número da página (padrão: 1)',
+  // })
+  // @ApiQuery({
+  //   name: 'limit',
+  //   required: false,
+  //   type: Number,
+  //   description: 'Itens por página (padrão: 10)',
+  // })
+  // --- Rota: Listar usuários(com paginação)
   @Get()
-  @UseGuards(JwtAuthGuard, RolesGuard) // Certifique-se que ambos os guards estão aplicados
+  @UseGuards(JwtAuthGuard, RolesGuard) // Garantir que os guards estão aplicados
   @Roles(Role.Admin)
+  @ApiBearerAuth()
   async findAll(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
@@ -75,8 +96,28 @@ export class UsersController {
     // Delega a lógica de busca e paginação ao UsersService
     return this.usersService.findAll(page, limit);
   }
+  // --- ROTA: Obter perfil do usuário logado ---
+  @Get('me')
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: 'Retorna o perfil do usuário logado.',
+  })
+  async getProfile(@Req() req) {
+    // req.user é injetado pelo JwtAuthGuard e contém o payload do JWT
+    const user = await this.usersService.findOne(req.user.userId);
 
-  @Get(':id') // Rota GET para /users/:id
+    if (!user) {
+      throw new NotFoundException('Usuário não encontrado.');
+    }
+
+    // Não retorne a senha por segurança
+    const { password, ...result } = user;
+    return result;
+  }
+
+  // --- ROTA: Buscar usuário por ID ---
+  @Get(':id')
   @ApiBearerAuth()
   @ApiParam({ name: 'id', description: 'ID do usuário a ser buscado' })
   async findOne(@Param('id', ParseIntPipe) id: number, @Req() req) {
@@ -99,7 +140,7 @@ export class UsersController {
     return result;
   }
 
-  // --- NOVO MÉTODO: PATCH para atualizar um usuário por ID ---
+  // --- ROTA: PATCH para atualizar um usuário por ID via admin ---
   @Patch(':id') // Rota PATCH para /users/:id
   @HttpCode(HttpStatus.OK) // Retorna 200 OK
   @ApiBearerAuth()
@@ -138,8 +179,8 @@ export class UsersController {
     const { password, ...result } = updatedUser;
     return result;
   }
-
-  @Delete(':id') // Rota DELETE para /users/:id
+  // --- Rota: DELETE para /users/:id ---
+  @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT) // Retorna 204 No Content para exclusão bem-sucedida
   @ApiBearerAuth()
   @ApiParam({ name: 'id', description: 'ID do usuário a ser excluído' })
@@ -161,7 +202,58 @@ export class UsersController {
       );
     }
 
-    // Se a validação passou, chame o service para remover
+    // Se a validação passou, chama o service para remover
     await this.usersService.remove(id);
+  }
+  // --- ROTA: Atualizar perfil do usuário logado com foto ---
+  @Put('me')
+  @ApiBearerAuth()
+  @HttpCode(HttpStatus.OK)
+  // FileInterceptor lida com o upload de um único arquivo
+  @ApiResponse({
+    status: 200,
+    description: 'Retorna o perfil do usuário logado.',
+  })
+  @UseInterceptors(
+    FileInterceptor('profilePicture', {
+      storage: diskStorage({
+        destination: './uploads', // Pasta onde as imagens serão salvas
+        filename: (req, file, cb) => {
+          const randomName = Array(32)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 16).toString(16))
+            .join('');
+          cb(null, `${randomName}${extname(file.originalname)}`);
+        },
+      }),
+      fileFilter: (req, file, cb) => {
+        if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+          return cb(
+            new BadRequestException(
+              'Somente arquivos de imagem são permitidos!',
+            ),
+            false,
+          );
+        }
+        cb(null, true);
+      },
+    }),
+  )
+  async updateProfile(
+    @Req() req,
+    @Body() updateUserData: UpdateUserDto,
+    @UploadedFile() file: Express.Multer.File, // Tipagem do arquivo
+  ) {
+    const userId = req.user.userId;
+    let updateData: Partial<User> = { ...updateUserData };
+
+    if (file) {
+      // Se um arquivo foi enviado, adicione a URL dele aos dados de atualização
+      updateData = { ...updateData, profilePictureUrl: file.path };
+    }
+
+    const updatedUser = await this.usersService.update(userId, updateData);
+    const { password, ...result } = updatedUser;
+    return result;
   }
 }

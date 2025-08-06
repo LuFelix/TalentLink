@@ -31,12 +31,37 @@
     </button>
 
     <button mat-button [matMenuTriggerFor]="profileMenu" class="profile-button">
-      <img
-        src="image-placeholder-user.jpg"
-        alt="Perfil"
-        class="profile-avatar"
-      />
+      <!-- ✅ Usando o async pipe para exibir a imagem do perfil ou o placeholder -->
+      <ng-container
+        *ngIf="
+          currentUserProfile$ | async as userProfile;
+          else placeholderImage
+        "
+      >
+        <img
+          *ngIf="userProfile?.profilePictureUrl"
+          [src]="'http://localhost:3000/' + userProfile.profilePictureUrl"
+          alt="Perfil"
+          class="profile-avatar"
+        />
+        <!-- Se o usuário for carregado, mas não tiver foto, exibe o placeholder -->
+        <img
+          *ngIf="!userProfile?.profilePictureUrl"
+          src="assets/image-placeholder-user.jpg"
+          alt="Perfil"
+          class="profile-avatar"
+        />
+      </ng-container>
+      <!-- Template para exibir enquanto os dados ainda não foram carregados -->
+      <ng-template #placeholderImage>
+        <img
+          src="assets/image-placeholder-user.jpg"
+          alt="Perfil"
+          class="profile-avatar"
+        />
+      </ng-template>
     </button>
+
     <mat-menu #profileMenu="matMenu">
       <button mat-menu-item routerLink="/profile">
         <mat-icon>person</mat-icon> Meu Perfil
@@ -50,49 +75,3 @@
     </mat-menu>
   </div>
 </mat-toolbar>
-
-<!-- <mat-toolbar color="primary" class="header-toolbar">
-  <a href="#" class="logo">
-    <img src="assets/logo-ts.png" alt="Talent Link Logo" />
-    <span class="logo-text">Talent Link</span>
-  </a>
-
-  <nav class="main-nav">
-    <a mat-button href="#about-us">Quem Somos</a>
-    <a mat-button href="#open-vacancies">Vagas Abertas</a>
-    <a mat-button href="#contact">Contato</a>
-  </nav>
-  <span class="toolbar-spacer"></span>
-  <button mat-icon-button class="menu-button" (click)="toggleSidenav.emit()">
-    <mat-icon>menu</mat-icon>
-  </button>
-
-  <button
-    mat-flat-button
-    color="accent"
-    routerLink="/dashboard"
-    *ngIf="isAuthenticated$ | async"
-    class="feed-button"
-  >
-    <mat-icon>dashboard</mat-icon> Feed
-  </button>
-
-  <div class="header-actions">
-    <button
-      mat-flat-button
-      color="accent"
-      routerLink="/login"
-      *ngIf="(isAuthenticated$ | async) === false"
-    >
-      Entrar
-    </button>
-    <button
-      mat-flat-button
-      color="warn"
-      (click)="logout()"
-      *ngIf="isAuthenticated$ | async"
-    >
-      Sair
-    </button>
-  </div>
-</mat-toolbar> -->

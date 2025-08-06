@@ -1,3 +1,4 @@
+// src/app/app.config.ts
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter, Routes } from '@angular/router';
 import {
@@ -9,6 +10,7 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { routes } from './app.routes';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes), // Fornece o roteador com rotas definidas
@@ -18,7 +20,7 @@ export const appConfig: ApplicationConfig = {
       useClass: AuthInterceptor,
       multi: true, // Permite que múltiplos interceptors sejam registrados
     },
-    provideHttpClient(),
+    //provideHttpClient(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideAnimations(),
     provideAnimationsAsync(),

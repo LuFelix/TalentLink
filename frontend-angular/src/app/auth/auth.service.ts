@@ -3,22 +3,10 @@ import { HttpClient } from '@angular/common/http'; // Para fazer requisições H
 import { Observable, tap, BehaviorSubject } from 'rxjs'; // Para lidar com respostas assíncronas
 import { Router } from '@angular/router'; // Para redirecionar após o login
 import { jwtDecode } from 'jwt-decode';
-
+import { DecodedToken, UserData } from '../shared/models/user.model';
 // Interface para os dados do token decodificado (payload)
-interface DecodedToken {
-  sub: number; // ID do usuário
-  email: string;
-  roles: string[]; // Array de strings como 'admin', 'user'
-  exp: number; // Timestamp de expiração
-  iat: number; // Timestamp de emissão
-}
-
 // Interface para o objeto de usuário que será armazenado no serviço
-export interface UserData {
-  userId: number;
-  email: string;
-  roles: string[];
-}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -62,6 +50,9 @@ export class AuthService {
           userId: decoded.sub,
           email: decoded.email,
           roles: decoded.roles,
+          firstName: '', // Pode ser preenchido com dados adicionais do backend
+          lastName: '', // Pode ser preenchido com dados adicionais do backend
+          phone: undefined, // Pode ser preenchido com dados adicionais do backend          profilePictureUrl: undefined, // Pode ser preenchido com dados adicionais do backend
         });
         this._isAuthenticated.next(true);
       } else {

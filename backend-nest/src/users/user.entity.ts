@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { Role } from '../auth/enums/role.enum';
 
 @Entity() // Marca a classe como uma entidade do TypeORM
 export class User {
@@ -12,7 +11,7 @@ export class User {
   @Column() // Coluna para a senha (será um hash)
   password: string;
 
-  @Column({ default: true }) // Exemplo: coluna para status de ativo/inativo
+  @Column({ default: true })
   isActive: boolean;
 
   //Usar JSON (mais flexível e compatível com muitos DBs)
@@ -22,4 +21,16 @@ export class User {
     default: () => '\'["user"]\'::jsonb',
   })
   roles: string[];
+
+  @Column({ nullable: true }) // Permite que o campo seja nulo no banco de dados
+  firstName: string;
+
+  @Column({ nullable: true })
+  lastName: string;
+
+  @Column({ nullable: true })
+  phone: string;
+
+  @Column({ nullable: true }) // URL da foto de perfil
+  profilePictureUrl: string;
 }

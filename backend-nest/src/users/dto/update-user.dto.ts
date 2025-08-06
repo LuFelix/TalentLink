@@ -5,6 +5,7 @@ import {
   MinLength,
   IsArray,
   IsBoolean,
+  IsString,
 } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -43,4 +44,28 @@ export class UpdateUserDto {
   @IsOptional()
   @IsBoolean()
   isActive?: boolean;
+
+  @ApiPropertyOptional({
+    example: 'João',
+    description: 'Novo primeiro nome do usuário',
+  })
+  @IsOptional()
+  @IsString()
+  firstName?: string;
+
+  @ApiPropertyOptional({
+    example: 'Silva',
+    description: 'Novo sobrenome do usuário',
+  })
+  @IsOptional()
+  @IsString()
+  lastName?: string;
+
+  @ApiPropertyOptional({
+    example: '+5511999999999',
+    description: 'Novo telefone do usuário',
+  })
+  @IsOptional()
+  @IsString()
+  phone?: string;
 }

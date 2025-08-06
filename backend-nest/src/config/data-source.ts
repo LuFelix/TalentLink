@@ -17,7 +17,7 @@ const dataSourceOptions: DataSourceOptions = {
   username: process.env.DB_USER || 'nestjs_user',
   password: process.env.DB_PASSWORD || 'nestjs_password',
   database: process.env.DB_NAME || 'nestjs_db',
-  entities: [User], // Liste todas as suas entidades aqui
+  entities: [User], // Listar todas as entidades aqui
   migrations: [__dirname + '/../migrations/**/*.ts'], // Caminho para suas migrações
   synchronize: false, // SEMPRE false para migrações!
   logging: ['query', 'error'],

@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DeepPartial } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt'; // Biblioteca para hash de senhas
 import { PaginationResult } from '../interfaces/pagination-result.interface.ts';
@@ -46,7 +46,11 @@ export class UsersService {
       password: hashedPassword,
       isActive, // Por padrão, o novo usuário é ativo
       roles,
-    });
+      firstName: null,
+      lastName: null,
+      phone: null,
+      profilePictureUrl: null,
+    } as DeepPartial<User>);
     return this.usersRepository.save(newUser);
   }
 
@@ -54,7 +58,16 @@ export class UsersService {
     const skip = (page - 1) * limit;
 
     const [users, total] = await this.usersRepository.findAndCount({
-      select: ['id', 'email', 'isActive', 'roles'],
+      select: [
+        'id',
+        'email',
+        'isActive',
+        'roles',
+        'firstName',
+        'lastName',
+        'phone',
+        'profilePictureUrl',
+      ] as (keyof User)[],
       take: limit,
       skip: skip,
       order: { id: 'ASC' },
@@ -68,6 +81,7 @@ export class UsersService {
       totalPages: Math.ceil(total / limit),
     };
   }
+
   async update(id: number, updateUserData: UpdateUserDto): Promise<User> {
     const user = await this.usersRepository.findOne({ where: { id } });
 
@@ -81,13 +95,16 @@ export class UsersService {
     }
 
     // Mescla os dados atualizados com o usuário existente
-    // Object.assign(user, updateUserData); // Uma forma alternativa simples
+    // Uma forma alternativa simples que é mais seguro
+    // do que passar o DTO diretamente, pois ele pode conter dados inválidos.
+    Object.assign(user, updateUserData);
 
     // O TypeORM update method is more efficient for partial updates
-    await this.usersRepository.update(id, updateUserData);
-
+    // await this.usersRepository.update(id, updateUserData);
+    // Salva o usuário com os novos dados
+    const updatedUser = await this.usersRepository.save(user);
     // Retorna o usuário atualizado (buscamos novamente para ter os dados mais recentes)
-    return this.usersRepository.findOne({ where: { id } });
+    return updatedUser;
   }
 
   async remove(id: number): Promise<void> {

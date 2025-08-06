@@ -4,11 +4,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common'; // Para ngIf
 import { RouterModule } from '@angular/router'; // Para routerLink
-import { AuthService } from '../../auth/auth.service'; // <-- Importe o AuthService
+import { AuthService } from '../../auth/auth.service'; // Para AuthService
 import { Observable, Subscription } from 'rxjs'; // Para usar Observables
 import { Router } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
+import { UserService } from '../../core/services/user.service';
+import { UserData } from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-header',
@@ -28,13 +30,23 @@ import { MatBadgeModule } from '@angular/material/badge';
 export class HeaderComponent {
   @Output() toggleSidenav = new EventEmitter<void>();
   isAuthenticated$: Observable<boolean>;
+  currentUserProfile$: Observable<UserData | null>;
+  //currentUserProfile: UserData | null = null;
   private authSubscription: Subscription | undefined;
+  private userProfileSubscription!: Subscription;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private router: Router
+  ) {
     this.isAuthenticated$ = this.authService.isAuthenticated$; // Conectão do observable do AuthService
+    this.currentUserProfile$ = this.userService.currentUserProfile$;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userService.fetchUserProfile().subscribe();
+  }
 
   onToggleSidenav() {
     this.toggleSidenav.emit();

@@ -26,4 +26,10 @@ export class AuthService {
       access_token: this.jwtService.sign(payload), // Gera o JWT
     };
   }
+  async register(email: string, password: string) {
+    // Usar o UsersService para criar o novo usuário
+    // A rota pública deve criar um usuário com a role 'user' por padrão
+    const newUser = await this.usersService.create(email, password, ['user']);
+    return newUser;
+  }
 }

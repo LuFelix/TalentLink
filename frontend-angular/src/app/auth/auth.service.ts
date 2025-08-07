@@ -28,11 +28,6 @@ export class AuthService {
     this.loadUserFromToken();
   }
 
-  register(userData: any) {
-    // ✅ Use a nova rota pública de registro
-    return this.http.post(`${this.apiUrl}/auth/register`, userData);
-  }
-
   // Verifica se existe um token e se ele é válido (não expirado)
   private hasValidToken(): boolean {
     const token = this.getToken();
